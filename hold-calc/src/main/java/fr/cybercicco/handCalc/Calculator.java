@@ -23,7 +23,7 @@ public class Calculator {
                 player2.setHand(deck, handPlayer2);
             }
             board.createRandomBoard(deck);
-            List<Card> communityCards = board.getCommunityCards(deck);
+            List<Card> communityCards = board.getCommunityCards();
             List<Card> player1Cards = player1.getPlayerHand();
             List<Card> player2Cards = player2.getPlayerHand();
             accumulator += showdown.compareHands(communityCards, player1Cards, player2Cards);
