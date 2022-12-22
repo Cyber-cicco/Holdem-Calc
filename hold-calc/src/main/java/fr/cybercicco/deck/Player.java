@@ -22,8 +22,4 @@ public class Player {
         hand.add(deck.getRandomCard());
         hand.add(deck.getRandomCard());
     }
-
-    public int getHandStrength() {
-        return handStrength;
-    }
 }

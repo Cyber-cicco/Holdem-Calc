@@ -43,6 +43,6 @@ public class StringCardConverter {
     }
 
     public static String getStringFromCard(Card card){
-        return  "" + card.getBaseStrength() + intToChar[card.getSuite()-1];
+        return  "" + card.baseStrength + intToChar[card.suite-1];
     }
 }
