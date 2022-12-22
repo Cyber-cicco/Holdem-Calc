@@ -1,6 +1,6 @@
 package fr.cybercicco.deckentities;
 
-import fr.cybercicco.factory.StringCardConverter;
+import fr.cybercicco.utils.StringCardConverter;
 
 import java.util.ArrayList;
 import java.util.List;

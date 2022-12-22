@@ -3,7 +3,7 @@ package fr.cybercicco;
 import fr.cybercicco.deckentities.Board;
 import fr.cybercicco.deckentities.Card;
 import fr.cybercicco.deckentities.Deck;
-import fr.cybercicco.factory.StringCardConverter;
+import fr.cybercicco.utils.StringCardConverter;
 import java.util.List;
 
 public class Main {

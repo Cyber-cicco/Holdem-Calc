@@ -1,4 +1,4 @@
-package fr.cybercicco.factory;
+package fr.cybercicco.utils;
 
 import fr.cybercicco.deckentities.Card;
 import fr.cybercicco.deckentities.Deck;
