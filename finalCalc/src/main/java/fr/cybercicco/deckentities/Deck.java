@@ -2,23 +2,31 @@ package fr.cybercicco.deckentities;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.Random;
 
 public class Deck {
 
-    private List<Card> cards = new ArrayList<>();
-    private Deck deck;
+    private final List<Card> cards = new ArrayList<>();
 
     public Deck(){
-        for(char suite :"cdsh".toCharArray()){
+        for(int h = 0; h <4; h++){
             for(int i = 1; i <14; i++){
-                cards.add(new Card(i, suite));
+                cards.add(new Card(i, h+1));
             }
         }
     }
 
     public Card getCardFromDeck(int strength, int suite){
-        return cards.remove(strength*suite-1);
+        for(int i = 0; i < cards.size(); i++){
+            if( cards.get(i).getStrength() == strength && cards.get(i).getSuite() == suite){
+                return cards.remove(i);
+            }
+        }
+        return getRandomCard();
+    }
+
+    public Card getRandomCard(){
+        return cards.remove(new Random().nextInt(cards.size()));
     }
 
     public void clearCards(){

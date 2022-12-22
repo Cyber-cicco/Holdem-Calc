@@ -3,8 +3,10 @@ package fr.cybercicco.factory;
 import fr.cybercicco.deckentities.Card;
 import fr.cybercicco.deckentities.Deck;
 
-
-public class CardCreator {
+/**
+ * Class to pull cards from the deck
+ */
+public class StringCardConverter {
     static final char[] charToStr = {'T', 'J', 'Q', 'K', 'A'};
     static final char[] intToChar = {'c', 'd', 's', 'h'};
     static final int charToStrIncr = 9;
@@ -16,7 +18,7 @@ public class CardCreator {
      *
      * @param card String representation of a card
      * @param deck The Deck of which the card will be pulled from
-     * @return Card
+     * @return Card from the deck
      *
      */
     public static Card getCardFromString(String card, Deck deck){
@@ -39,5 +41,9 @@ public class CardCreator {
             strength = Character.getNumericValue(firstChar);
         }
         return deck.getCardFromDeck(strength, suite);
+    }
+
+    public static String getStringFromCard(Card card){
+        return  "" + card.getBaseStrength() + intToChar[card.getSuite()-1];
     }
 }
