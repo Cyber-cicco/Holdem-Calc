@@ -16,9 +16,17 @@ public class Deck {
         }
     }
 
+    /**
+     *
+     * @param strength
+     * @param suite
+     * @return
+     * gets the wanted card from the deck. If it doesn't exist, a random card will be returned instead
+     * TODO : implement a way to catch an error if strength or suite is out of the bounds
+     */
     public Card getCardFromDeck(int strength, int suite){
         for(int i = 0; i < cards.size(); i++){
-            if( cards.get(i).getStrength() == strength && cards.get(i).getSuite() == suite){
+            if( cards.get(i).strength == strength && cards.get(i).suite == suite){
                 return cards.remove(i);
             }
         }

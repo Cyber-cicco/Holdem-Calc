@@ -12,14 +12,13 @@ public class StringCardConverter {
     static final int charToStrIncr = 9;
     static final int intToCharIncr = 1;
 
-    //algo un peu moche permettant de récupérer une carte du deck à partir de sa représentation en chaine.
-
     /**
      *
      * @param card String representation of a card
      * @param deck The Deck of which the card will be pulled from
      * @return Card from the deck
-     *
+     * Takes the standardised appelation of a card and transforms it into
+     * an object with parameters optimised for algorithms
      */
     public static Card getCardFromString(String card, Deck deck){
         int strength = 0;

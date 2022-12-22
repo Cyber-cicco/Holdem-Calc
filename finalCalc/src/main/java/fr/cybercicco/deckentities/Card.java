@@ -5,31 +5,23 @@ public class Card implements Comparable<Card>{
     public final int baseStrength;
     public final int suite;
 
-    //constructeur de la carte. Permet d'intialiser son rang et sa suite
+    /**
+     *
+     * @param strength
+     * @param suite
+     * creates a card from two integers.
+     * This class is optimised for algorithms and should only be accessed to by factories, thus the abscence of getters
+     * and setters
+     * All the logical bits of the user interface should in now way get implemented here.
+     */
     public Card(int strength, int suite){
         this.strength = strength;
         baseStrength = strength;
         this.suite = suite;
     }
 
-    public int getStrength() {
-        return strength;
-    }
-
-    public int getBaseStrength() {
-        return baseStrength;
-    }
-
-    public int getSuite() {
-        return suite;
-    }
-
-    public void setStrength(int strength) {
-        this.strength = strength;
-    }
-
     @Override
     public int compareTo(Card o) {
-        return Integer.compare(strength, o.getStrength());
+        return Integer.compare(strength, o.strength);
     }
 }
