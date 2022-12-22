@@ -1,5 +1,7 @@
-package fr.cybercicco.deck;
+package fr.cybercicco.handCalc;
 
+
+import fr.cybercicco.deck.Card;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,86 +108,55 @@ public class Showdown {
         boolean straight = true;
         boolean quads = false;
 
-        for(int i = 1; i<5; i++){
-            if(straight && (cards.get(i).strength != cards.get(i-1).strength-1)){
+        for(int i = 1; i<5; i++) {
+            if (straight && (cards.get(i).strength != cards.get(i - 1).strength - 1)) {
                 straight = false;
             }
-            if( flush && (cards.get(i).suite != cards.get(i-1).suite)){
+            if (flush && (cards.get(i).suite != cards.get(i - 1).suite)) {
                 flush = false;
             }
-        }
-        if(cards.get(0).strength == 12 && cards.get(1).strength == 3 && cards.get(2).strength == 2 && cards.get(3).strength == 1 && cards.get(4).strength == 0){
-            straight = true;
-            Card card1 = cards.get(0);
-            cards.remove(0);
-            cards.add(card1);
-        }
-
-        for (int i = 1; i<5; i++){
-            if(trips && (cards.get(i).strength == cards.get(i-3).strength)){
+            if(trips && cards.get(i).strength == cards.get(i-1).strength){
                 quads = true;
-                trips = false;
-                Card card = cards.get(i);
-                cards.remove(i);
-                cards.add(0,card);
-
-            } else
-            if(pair > 0 && ((cards.get(i).strength == cards.get(0).strength)||(pair == 2 && cards.get(i).strength == cards.get(2).strength))){
-                trips = true;
-                pair -= 1;
-                if(pair == 1 && cards.get(i).strength == cards.get(2).strength){
-                    for(int j = 0; j<3; j++){
-                        Card card = cards.get(4);
-                        cards.remove(4);
-                        cards.add(0,card);
+                for(int j = 0; j > -4; j--){
+                    cards.get(i-j).strength *= cards.get(i-j).baseStrength*Math.pow(14,7);
+                }
+            } else if(pair > 0){
+                if(cards.get(i) == cards.get(i-2)){
+                    trips = true;
+                    pair--;
+                    for(int j = 0; j > -3; j--){
+                        cards.get(i-j).strength *= cards.get(i-j).baseStrength*Math.pow(10,3);
                     }
-                } else {
-                    Card card1 = cards.get(i);
-                    cards.remove(i);
-                    cards.add(0,card1);
                 }
-            } else
-            if(cards.get(i).strength == cards.get(i-1).strength){
-                if(pair > 0){
-                    Card card1 = cards.get(i);
-                    Card card2 = cards.get(i-1);
-                    cards.remove(i);
-                    cards.remove(i-1);
-                    cards.add(2, card1);
-                    cards.add(2, card2);
-                } else if (!trips){
-                    Card card1 = cards.get(i);
-                    Card card2 = cards.get(i-1);
-                    cards.remove(i);
-                    cards.remove(i-1);
-                    cards.add(0, card1);
-                    cards.add(0, card2);
-                }
-                pair +=1;
+            } else if (cards.get(i) == cards.get(i-1)){
+                pair++;
+                cards.get(i).strength = cards.get(i).baseStrength*(int) Math.pow(10,2);
+                cards.get(i-1).strength = cards.get(i-1).baseStrength*(int) Math.pow(10,2);
             }
         }
 
         // bloc de code servant à déterminer la force de la main
-        if(straight && flush){
+        if (straight && flush) {
             return 8;
-        } else if ( quads){
+        } else if (quads) {
             return 7;
-        } else if (pair == 1 && trips){
+        } else if (pair == 1 && trips) {
             return 6;
-        } else if (flush){
+        } else if (flush) {
             return 5;
-        } else if (straight){
+        } else if (straight) {
             return 4;
-        } else if (trips){
+        } else if (trips) {
             return 3;
-        } else if (pair == 2){
+        } else if (pair == 2) {
             return 2;
-        } else if (pair == 1){
+        } else if (pair == 1) {
             return 1;
         } else {
             return 0;
         }
     }
+
 
     //code permettant de déterminer laquelle de deux mains est la meilleure
     public float getWinner(List<Card> player1, List<Card> player2){

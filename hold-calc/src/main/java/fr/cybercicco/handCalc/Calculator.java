@@ -3,10 +3,6 @@ package fr.cybercicco.handCalc;
 import fr.cybercicco.deck.Board;
 import fr.cybercicco.deck.Deck;
 import fr.cybercicco.deck.Player;
-import fr.cybercicco.deck.Showdown;
-
-import fr.cybercicco.deck.Card;
-import java.util.List;
 
 
 public class Calculator {
@@ -23,10 +19,7 @@ public class Calculator {
                 player2.setHand(deck, handPlayer2);
             }
             board.createRandomBoard(deck);
-            List<Card> communityCards = board.getCommunityCards();
-            List<Card> player1Cards = player1.getPlayerHand();
-            List<Card> player2Cards = player2.getPlayerHand();
-            accumulator += showdown.compareHands(communityCards, player1Cards, player2Cards);
+            accumulator += showdown.compareHands(board.getCommunityCards(), player1.getPlayerHand(), player2.getPlayerHand());
         }
 
         return "Équité de la main "+ handPlayer1 + " contre " + ((handPlayer2 == null) ? "une main aléatoire : " : handPlayer2 + " : ") + ((accumulator*100)/loops) + "%";

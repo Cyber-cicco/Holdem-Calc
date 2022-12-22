@@ -18,7 +18,7 @@ public class Deck {
 
         //boucle permettant de créer le paquet
         for (char c : suite) {
-            for (int j = 0; j < 13; j++) {
+            for (int j = 1; j < 14; j++) {
                 cards.add(new Card(j, c));
             }
         }
@@ -31,14 +31,14 @@ public class Deck {
         char firstChar = card.charAt(0);
         char secondChar = card.charAt(1);
         if (Character.isDigit(firstChar)){
-            strength = Character.getNumericValue(card.charAt(0))-2;
+            strength = Character.getNumericValue(card.charAt(0))-1;
         } else {
             switch (firstChar) {
-                case 'T' -> strength = 8;
-                case 'J' -> strength = 9;
-                case 'Q' -> strength = 10;
-                case 'K' -> strength = 11;
-                case 'A' -> strength = 12;
+                case 'T' -> strength = 9;
+                case 'J' -> strength = 10;
+                case 'Q' -> strength = 11;
+                case 'K' -> strength = 12;
+                case 'A' -> strength = 13;
                 default -> {
                     System.out.println("Erreur de saisie");
                     return getRandomCard();
@@ -48,6 +48,7 @@ public class Deck {
         if ("scdh".indexOf(secondChar) != -1){
             suite = secondChar;
             Card newCard = new Card(strength, suite);
+            cards.remove(newCard);
             for(int i = 0; i < cards.size(); i++){
                 if( cards.get(i).strength == newCard.strength && cards.get(i).suite == newCard.suite){
                     cards.remove(i);

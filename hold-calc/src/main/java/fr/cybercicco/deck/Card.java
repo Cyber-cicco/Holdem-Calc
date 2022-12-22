@@ -1,13 +1,17 @@
 package fr.cybercicco.deck;
 
+import java.util.Comparator;
+
 //initialisation de la classe carte
 public class Card {
-    int strength;
-    char suite;
+    public int strength;
+    public int baseStrength;
+    public char suite;
 
     //constructeur de la carte. Permet d'intialiser son rang et sa suite
     public Card(int strength, char suite){
         this.strength = strength;
+        baseStrength = strength;
         this.suite = suite;
     }
 
@@ -18,12 +22,13 @@ public class Card {
             return Integer.toString(strength+2) + suite;                
         } else {
             return switch (strength) {
-                case 8 -> "T" + suite;
-                case 9 -> "J" + suite;
-                case 10 -> "Q" + suite;
-                case 11 -> "K" + suite;
+                case 9 -> "T" + suite;
+                case 10 -> "J" + suite;
+                case 11 -> "Q" + suite;
+                case 12 -> "K" + suite;
                 default -> "A" + suite;
             };
         }
     }
+
 }

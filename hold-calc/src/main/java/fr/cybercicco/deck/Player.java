@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Player {
     private List<Card> hand = new ArrayList<>();
-
+    private int handStrength;
     public void setHand(Deck deck, String cards){
         hand.clear();
         hand.add(deck.getCardFromDeck(cards.substring(0, 2)));
@@ -21,5 +21,9 @@ public class Player {
         hand.clear();
         hand.add(deck.getRandomCard());
         hand.add(deck.getRandomCard());
+    }
+
+    public int getHandStrength() {
+        return handStrength;
     }
 }

@@ -3,7 +3,7 @@ package fr.cybercicco;
 import fr.cybercicco.deck.Board;
 import fr.cybercicco.deck.Deck;
 import fr.cybercicco.deck.Player;
-import fr.cybercicco.deck.Showdown;
+import fr.cybercicco.handCalc.Showdown;
 import fr.cybercicco.handCalc.Calculator;
 
 public class Main {
