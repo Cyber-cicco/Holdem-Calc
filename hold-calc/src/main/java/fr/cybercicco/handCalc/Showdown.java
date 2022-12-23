@@ -44,8 +44,9 @@ public class Showdown {
             for(int i = 0; i<cards.size(); i++){
                 boolean write = true;
                 for (int pointer : pointers){
-                    if(pointer == i){
+                    if (pointer == i) {
                         write = false;
+                        break;
                     }
                 }
                 if (write){

@@ -6,6 +6,10 @@ import fr.cybercicco.deckentities.Player;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Class providing static methods to determinate how strong a hand is.
+ * There's certainly a lot of refactoring to do, but it's fast.
+ */
 public class HandStrengthCalc {
 
     static final int PAIR = 1;
@@ -28,7 +32,7 @@ public class HandStrengthCalc {
     public static void setHandStrength(Player player){
 
         //on déclare les variables permettant de vérifier la nature de la main
-        int pair = 0;
+        byte pair = 0;
         boolean trips = false;
         boolean flush = true;
         boolean straight = true;
@@ -109,5 +113,66 @@ public class HandStrengthCalc {
             }
         }
         Arrays.sort(str);
+    }
+
+    /**
+     *
+     * @param cards list de cartes
+     * @return
+     * Method used to determinate which 5 cards are the best out of the combination of 6 or 7 hands
+     * Since all combination are sorted from card strength, it's no use to have the logic present in the other
+     * method to know which of two hands with the same rank is the best : it will always be the furthest one in the
+     * list.
+     */
+    public static byte getCombinationStrength(List<Card> cards){
+        byte pair = 0;
+        boolean trips = false;
+        boolean straight = true;
+        boolean flush = true;
+        for(int i = 1; i < 5; i++){
+            if (cards.get(i).strength != cards.get(i - 1).strength-1) {
+                straight = false;
+            }
+            if (flush && (cards.get(i).suite != cards.get(i - 1).suite)) {
+                flush = false;
+            }
+            if(trips){
+                if(cards.get(i).strength == cards.get(i-3).strength){
+                    return QUADS;
+                    }
+                }
+            if(pair > 0){
+                if(cards.get(i).strength == cards.get(i-2).strength){
+                    trips = true;
+                    pair--;
+                } else if (cards.get(i).strength == cards.get(i-1).strength){
+                    pair++;
+                }
+            } else if (cards.get(i).strength == cards.get(i-1).strength){
+                pair++;
+            }
+        }
+        if(straight){
+            if(flush){
+                return STRAIGHT_FLUSH;
+            }
+            return STRAIGHT;
+        }
+        if(flush){
+            return FLUSH;
+        }
+        if(trips && pair == 1){
+            return FULL;
+        }
+        if(trips){
+            return TRIPS;
+        }
+        if(pair == 2){
+            return D_PAIR;
+        }
+        if(pair == 1){
+            return PAIR;
+        }
+        return 0;
     }
 }
