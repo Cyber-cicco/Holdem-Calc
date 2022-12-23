@@ -1,5 +1,7 @@
 package fr.cybercicco.deckentities;
 
+import fr.cybercicco.utils.StringCardConverter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +12,12 @@ public class Board {
         communityCards.clear();
         for(int i = 0; i <5; i++){
             communityCards.add(deck.getRandomCard());
+        }
+    }
+
+    public void setBoard(String[] cards, Deck deck){
+        for(int i = 0; i <5; i++){
+            communityCards.add(StringCardConverter.getCardFromString(cards[i], deck));
         }
     }
 

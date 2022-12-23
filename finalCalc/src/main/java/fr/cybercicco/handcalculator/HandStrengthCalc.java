@@ -1,7 +1,10 @@
 package fr.cybercicco.handcalculator;
 
 import fr.cybercicco.deckentities.Card;
+import fr.cybercicco.deckentities.Player;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class HandStrengthCalc {
@@ -23,60 +26,92 @@ public class HandStrengthCalc {
      * lists and get which hand is stronger by comparing every card strength
      * one by one.
      */
-    public static void setHandStrength(List<Card> cards){
+    public static void setHandStrength(Player player){
+
+        //on déclare les variables permettant de vérifier la nature de la main
         int pair = 0;
         boolean trips = false;
         boolean flush = true;
         boolean straight = true;
 
+        //on déclare des attributs comme variable pour ne pas faire des appels tout le temps
+        List<Card> cards = player.bestCombination;
+        int[] str = player.strengthOfBestCombination;
+
+        //on débuggue ce bordel
+        System.out.println(Arrays.toString(str));
+        //on lance la boucle itérant sur toutes les cartes
         for(int i = 1; i<5; i++) {
-            if (straight && (cards.get(i).strength != cards.get(i - 1).strength - 1)) {
+
+            //Si la carte actuelle n'est pas égale à un de moins que la carte avant, alors ce n'est pas une suite
+            if (straight && (str[i] != str[i-1] - 1)) {
                 straight = false;
             }
+
+            //Si la couleur de la carte actuelle n'est pas égale à celle de de la carte avant, alors ce n'est pas une flush
             if (flush && (cards.get(i).suite != cards.get(i - 1).suite)) {
                 flush = false;
             }
-            if(trips && cards.get(i).strength == cards.get(i-1).strength){
-                trips = false;
-                for(int j = 0; j > -4; j--){
-                    cards.get(i-j).strength = cards.get(i-j).baseStrength*(int)Math.pow(14,QUADS);
-                }
-            } else if(pair > 0){
-                if(cards.get(i) == cards.get(i-2)){
-                    trips = true;
-                    pair--;
-                    for(int j = 0; j > -3; j--){
-                        cards.get(i-j).strength = cards.get(i-j).baseStrength*(int)Math.pow(14,TRIPS);
+
+            //Bloc de code ou toute situation est mutuellement exclusive
+            //Si on a déjà identifié que trois cartes étaient identiques:
+            if(trips){
+
+                //Si la carte actuelle est de même force que celle trois rang derrière alors il y a quads.
+                if(cards.get(i).strength == cards.get(i-3).strength){
+                    trips = false; // on indique qu'il ne s'agit pas de trois cartes identiques mais quatre
+                    for(int j = 0; j > -4; j--){
+                        str[i-j] = cards.get(i-j).strength*(int)Math.pow(14,QUADS);
                     }
                 }
-            } else if (cards.get(i) == cards.get(i-1)){
+
+            //S'il y a déjà une paire...
+            } else if(pair > 0){
+
+                //On test s'il y a une carte de même force deux rangs avant. Si c'est le cas, il y a brelan
+                if(cards.get(i).strength == cards.get(i-2).strength){
+                    trips = true;
+                    pair--; //On décrément la paire, puisqu'il s'agit de trois cartes identiques et non deux
+                    for(int j = 0; j > -3; j--){
+                        str[i-j] = cards.get(i-j).strength*(int)Math.pow(14,TRIPS);
+                    }
+                }
+
+            //Si il n'y a ni trips ni quads, alors si notre carte actuelle est égale à celle d'avant, on a une paire en
+            //plus
+            } else if (cards.get(i).strength == cards.get(i-1).strength){
                 pair++;
-                cards.get(i).strength = cards.get(i).baseStrength*(int) Math.pow(14,PAIR);
-                cards.get(i-1).strength = cards.get(i-1).baseStrength*(int) Math.pow(14,PAIR);
+                str[i] = cards.get(i).strength*(int) Math.pow(14,PAIR);
+                str[i-1] = cards.get(i-1).strength*(int) Math.pow(14,PAIR);
             }
+
         }
+
+        //code assez parlant (relativement au reste), donc juste on a pas set correctement la force des mains pour
+        //certaines combinaisons, donc on le fait maintenant.
         if (pair == 2){
-            for(Card card : cards){
-                if(card.strength > 13) card.strength = card.baseStrength * (int) Math.pow(14, D_PAIR);
+            for(int i = 0; i < 5; i++){
+                if(str[i] > 13) str[i] = cards.get(i).strength * (int) Math.pow(14, D_PAIR);
             }
         } else if (pair == 1 && trips) {
-            for(Card card : cards){
-                if(card.strength >Math.pow(14, D_PAIR)) card.strength = card.baseStrength * (int) Math.pow(14,FULL);
+            for(int i = 0; i < 5; i++){
+                if(str[i] > Math.pow(14, D_PAIR)) str[i] = cards.get(i).strength * (int) Math.pow(14,FULL);
             }
         } else if (straight) {
             if(flush){
-                for(Card card : cards){
-                    card.strength = card.baseStrength * (int) Math.pow(14, STRAIGHT_FLUSH);
+                for(int i = 0; i < 5; i++){
+                    str[i] = cards.get(i).strength*(int) Math.pow(14, STRAIGHT_FLUSH);
                 }
             } else{
-                for(Card card :cards){
-                    card.strength = card.baseStrength * (int) Math.pow(14, STRAIGHT);
+                for(int i = 0; i < 5; i++){
+                    str[i] = cards.get(i).strength*(int) Math.pow(14, STRAIGHT);
                 }
             }
         } else if(flush){
-            for (Card card : cards){
-                card.strength = card.baseStrength * (int) Math.pow(14, FLUSH);
+            for(int i = 0; i < 5; i++){
+                str[i] = cards.get(i).strength*(int) Math.pow(14, FLUSH);
             }
         }
+        Arrays.sort(str);
     }
 }

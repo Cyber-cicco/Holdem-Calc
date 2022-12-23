@@ -14,11 +14,7 @@ public class Deck {
      * is no duplicate
      */
     public Deck(){
-        for(int h = 0; h <4; h++){
-            for(int i = 1; i <14; i++){
-                cards.add(new Card(i, h+1));
-            }
-        }
+        clearCards();
     }
 
     /**
@@ -44,5 +40,10 @@ public class Deck {
 
     public void clearCards(){
         cards.clear();
+        for(int h = 0; h <4; h++){
+            for(int i = 1; i <14; i++){
+                cards.add(new Card(i, h+1));
+            }
+        }
     }
 }

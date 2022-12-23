@@ -2,7 +2,6 @@ package fr.cybercicco.deckentities;
 
 public class Card implements Comparable<Card>{
     public int strength;
-    public final int baseStrength;
     public final int suite;
 
     /**
@@ -16,7 +15,6 @@ public class Card implements Comparable<Card>{
      */
      Card(int strength, int suite){
         this.strength = strength;
-        baseStrength = strength;
         this.suite = suite;
     }
 

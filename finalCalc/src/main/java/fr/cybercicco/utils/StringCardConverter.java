@@ -29,6 +29,7 @@ public class StringCardConverter {
         for(int i = 0; i <intToChar.length; i++){
             if(firstChar == charToStr[i]){
                 strength = i + charToStrIncr;
+                System.out.println(strength);
             }
             if(secondChar == intToChar[i]){
                 suite = i+ intToCharIncr;
@@ -43,6 +44,6 @@ public class StringCardConverter {
     }
 
     public static String getStringFromCard(Card card){
-        return  "" + card.baseStrength + intToChar[card.suite-1];
+        return  "" + card.strength + intToChar[card.suite-1];
     }
 }
