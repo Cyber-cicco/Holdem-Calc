@@ -1,12 +1,12 @@
 package fr.cybercicco.deckentities;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Deck {
 
     private final List<Card> cards = new ArrayList<>();
+    private final List<Card> allCards = new ArrayList<>(52);
+    private final Random rand = new Random();
 
     /**
      * Instantiating a deck creates all cards that will be used and put it in an arraylist
@@ -14,6 +14,11 @@ public class Deck {
      * is no duplicate
      */
     public Deck(){
+        for(int h = 0; h <4; h++){
+            for(int i = 1; i <14; i++){
+                allCards.add(new Card(i, h+1));
+            }
+        }
         clearCards();
     }
 
@@ -35,15 +40,15 @@ public class Deck {
     }
 
     public Card getRandomCard(){
-        return cards.remove(new Random().nextInt(cards.size()));
+        return cards.remove(rand.nextInt(cards.size()));
     }
 
     public void clearCards(){
         cards.clear();
-        for(int h = 0; h <4; h++){
-            for(int i = 1; i <14; i++){
-                cards.add(new Card(i, h+1));
-            }
-        }
+        cards.addAll(allCards);
+    }
+
+    public Card testCardEfficiency(){
+        return cards.remove(cards.size()-1);
     }
 }

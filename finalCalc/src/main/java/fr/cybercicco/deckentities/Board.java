@@ -15,7 +15,15 @@ public class Board {
         }
     }
 
+    public void resetRandomBoard(Deck deck){
+        communityCards.clear();
+        for(int i = 0; i <5; i++){
+            communityCards.add(deck.getRandomCard());
+        }
+    }
+
     public void setBoard(String[] cards, Deck deck){
+        communityCards.clear();
         for(int i = 0; i <5; i++){
             communityCards.add(StringCardConverter.getCardFromString(cards[i], deck));
         }

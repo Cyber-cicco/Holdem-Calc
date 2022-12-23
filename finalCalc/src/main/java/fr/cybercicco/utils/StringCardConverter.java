@@ -38,13 +38,13 @@ public class StringCardConverter {
             if(firstChar == charToStr[4]){
                 strength = 13;
             } else {
-                strength = Character.getNumericValue(firstChar);
+                strength = Character.getNumericValue(firstChar)-1;
             }
         }
         return deck.getCardFromDeck(strength, suite);
     }
 
     public static String getStringFromCard(Card card){
-        return  "" + card.strength + intToChar[card.suite-1];
+        return  "" + (card.strength+1) + intToChar[card.suite-1];
     }
 }
