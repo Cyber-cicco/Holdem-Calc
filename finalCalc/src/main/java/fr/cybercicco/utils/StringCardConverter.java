@@ -29,16 +29,17 @@ public class StringCardConverter {
         for(int i = 0; i <intToChar.length; i++){
             if(firstChar == charToStr[i]){
                 strength = i + charToStrIncr;
-                System.out.println(strength);
             }
             if(secondChar == intToChar[i]){
                 suite = i+ intToCharIncr;
             }
         }
-        if(strength == 0 && firstChar == charToStr[4]){
-            strength = 13;
-        } else {
-            strength = Character.getNumericValue(firstChar);
+        if(strength == 0){
+            if(firstChar == charToStr[4]){
+                strength = 13;
+            } else {
+                strength = Character.getNumericValue(firstChar);
+            }
         }
         return deck.getCardFromDeck(strength, suite);
     }

@@ -8,7 +8,7 @@ import java.util.List;
 public class Player {
     public List<Card> hand = new ArrayList<>();
     public List<Card> bestCombination = new ArrayList<>();
-    public int[] strengthOfBestCombination = new int[5];
+    public long[] strengthOfBestCombination = new long[5];
 
     public void setHand(Deck deck, String cards){
         hand.clear();

@@ -31,7 +31,7 @@ public class Deck {
                 return cards.remove(i);
             }
         }
-        return getRandomCard();
+        throw new RuntimeException();
     }
 
     public Card getRandomCard(){
