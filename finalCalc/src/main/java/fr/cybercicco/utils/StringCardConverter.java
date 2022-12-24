@@ -3,11 +3,19 @@ package fr.cybercicco.utils;
 import fr.cybercicco.deckentities.Card;
 import fr.cybercicco.deckentities.Deck;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Class to pull cards from the deck
  */
 public class StringCardConverter {
-    static final char[] charToStr = {'T', 'J', 'Q', 'K', 'A'};
+    static final Map<Character, Integer> cdsh = Map.of(
+            'c' ,1,
+            'd', 2,
+            's', 3,
+            'h', 4
+            );
     static final char[] intToChar = {'c', 'd', 's', 'h'};
     static final int charToStrIncr = 9;
     static final int intToCharIncr = 1;
@@ -22,29 +30,25 @@ public class StringCardConverter {
      */
     public static Card getCardFromString(String card, Deck deck){
         int strength = 0;
-        int suite = 0;
-        char firstChar = card.charAt(0);
-        char secondChar = card.charAt(1);
-
-        for(int i = 0; i <intToChar.length; i++){
-            if(firstChar == charToStr[i]){
-                strength = i + charToStrIncr;
-            }
-            if(secondChar == intToChar[i]){
-                suite = i+ intToCharIncr;
-            }
-        }
-        if(strength == 0){
-            if(firstChar == charToStr[4]){
-                strength = 13;
-            } else {
-                strength = Character.getNumericValue(firstChar)-1;
-            }
-        }
-        return deck.getCardFromDeck(strength, suite);
+        switch (card.charAt(0)){
+           case 'T' -> strength = 9;
+           case 'J' -> strength = 10;
+           case 'Q' -> strength = 11;
+           case 'K' -> strength = 12;
+           case 'A' -> strength = 13;
+           default -> strength = Character.getNumericValue(card.charAt(0)) -1;
+       }
+        return deck.getCardFromDeck(strength, cdsh.get(card.charAt(1)));
     }
 
     public static String getStringFromCard(Card card){
-        return  "" + (card.strength+1) + intToChar[card.suite-1];
+        return switch (card.strength) {
+            case 9 -> "T" + intToChar[card.suite - 1];
+            case 10 -> "J" + intToChar[card.suite - 1];
+            case 11 -> "Q" + intToChar[card.suite - 1];
+            case 12 -> "K" + intToChar[card.suite - 1];
+            case 13 -> "A" + intToChar[card.suite - 1];
+            default -> "" + (card.strength + 1) + intToChar[card.suite - 1];
+        };
     }
 }

@@ -1,5 +1,8 @@
 package fr.cybercicco.deckentities;
 
+
+import fr.cybercicco.utils.StringCardConverter;
+
 import java.util.*;
 
 public class Deck {
@@ -36,7 +39,9 @@ public class Deck {
                 return cards.remove(i);
             }
         }
-        throw new RuntimeException();
+        System.out.println(StringCardConverter.getStringFromCard(new Card(strength, suite)));
+        System.out.println(cards.stream().map(StringCardConverter::getStringFromCard).toList());
+        throw new RuntimeException("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     }
 
     public Card getRandomCard(){
@@ -46,9 +51,5 @@ public class Deck {
     public void clearCards(){
         cards.clear();
         cards.addAll(allCards);
-    }
-
-    public Card testCardEfficiency(){
-        return cards.remove(cards.size()-1);
     }
 }

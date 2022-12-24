@@ -36,7 +36,7 @@ public class HandStrengthCalc {
         boolean straight = true;
 
         //on déclare les éléments permettant d'obtenir la force de la main.
-        long[] str = new long[5];
+        long[] str = {cards.get(0).strength, cards.get(1).strength, cards.get(2).strength, cards.get(3).strength, cards.get(4).strength};
         long accumulator = 0;
 
         //on lance la boucle itérant sur toutes les cartes
