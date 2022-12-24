@@ -31,24 +31,24 @@ public class StringCardConverter {
     public static Card getCardFromString(String card, Deck deck){
         int strength = 0;
         switch (card.charAt(0)){
-           case 'T' -> strength = 9;
-           case 'J' -> strength = 10;
-           case 'Q' -> strength = 11;
-           case 'K' -> strength = 12;
-           case 'A' -> strength = 13;
-           default -> strength = Character.getNumericValue(card.charAt(0)) -1;
+           case 'T' -> strength = 19;
+           case 'J' -> strength = 20;
+           case 'Q' -> strength = 21;
+           case 'K' -> strength = 22;
+           case 'A' -> strength = 23;
+           default -> strength = Character.getNumericValue(card.charAt(0)) +9;
        }
         return deck.getCardFromDeck(strength, cdsh.get(card.charAt(1)));
     }
 
     public static String getStringFromCard(Card card){
         return switch (card.strength) {
-            case 9 -> "T" + intToChar[card.suite - 1];
-            case 10 -> "J" + intToChar[card.suite - 1];
-            case 11 -> "Q" + intToChar[card.suite - 1];
-            case 12 -> "K" + intToChar[card.suite - 1];
-            case 13 -> "A" + intToChar[card.suite - 1];
-            default -> "" + (card.strength + 1) + intToChar[card.suite - 1];
+            case 19 -> "T" + intToChar[card.suite - 1];
+            case 20 -> "J" + intToChar[card.suite - 1];
+            case 21 -> "Q" + intToChar[card.suite - 1];
+            case 22 -> "K" + intToChar[card.suite - 1];
+            case 23 -> "A" + intToChar[card.suite - 1];
+            default -> "" + (card.strength - 9) + intToChar[card.suite - 1];
         };
     }
 }

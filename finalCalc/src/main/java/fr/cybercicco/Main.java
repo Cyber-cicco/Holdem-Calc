@@ -22,16 +22,16 @@ public class Main {
 
         p1.setHand(deck, "AhAd");
         p2.setHand(deck, "AcKs");
-        board.createRandomBoard(deck);
+        //board.createRandomBoard(deck);
 
-        showdown.getWinner(p1,p2,board.getCommunityCards());
+        //showdown.getWinner(p1,p2,board.getCommunityCards());
 
-        String[] comb1 = {"Ah", "Ad", "Kc", "Kd", "4h"};
-        String[] comb2 = {"Ah", "Ad", "Kc", "Kd", "2c"};
-        /*
-        board.setBoard(comb1,deck);
-        System.out.println(HandStrengthCalc.getHandStrength(board.getCommunityCards()));
+        String[] comb1 = {"Ah", "Kc", "Qc", "Jc", "Tc"};
+        String[] comb2 = {"Ah", "Ad", "Ac", "As", "Kc"};
+
         board.setBoard(comb2,deck);
+        System.out.println(HandStrengthCalc.getHandStrength(board.getCommunityCards()));
+/*        board.setBoard(comb2,deck);
         System.out.println(HandStrengthCalc.getHandStrength(board.getCommunityCards()));
 
 

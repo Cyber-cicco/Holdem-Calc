@@ -19,6 +19,8 @@ public class HandStrengthCalc {
     static final int QUADS = 7;
     static final int STRAIGHT_FLUSH = 8;
 
+    static final int POW = 3;
+
     /**
      * THIS METHOD NEEDS A SORTED LIST TO WORK.
      * Changes hand card strength based on the hand rank in poker.
@@ -59,7 +61,7 @@ public class HandStrengthCalc {
                 if (cards.get(i).strength == cards.get(i - 3).strength) {
                     trips = false; // on indique qu'il ne s'agit pas de trois cartes identiques mais quatre
                     for (int j = 0; j > -4; j--) {
-                        str[i + j] = cards.get(i + j).strength * (long) Math.pow(14, QUADS);
+                        str[i + j] = cards.get(i + j).strength * (long) Math.pow(POW, QUADS);
                     }
                 }
             }
@@ -71,17 +73,17 @@ public class HandStrengthCalc {
                     trips = true;
                     pair--; //On décrément la paire, puisqu'il s'agit de trois cartes identiques et non deux
                     for (int j = 0; j > -3; j--) {
-                        str[i + j] = cards.get(i + j).strength * (long) Math.pow(14, TRIPS);
+                        str[i + j] = cards.get(i + j).strength * (long) Math.pow(POW, TRIPS);
                     }
                 } else if (cards.get(i).strength == cards.get(i - 1).strength) {
                     pair++;
-                    str[i] = cards.get(i).strength * (long) Math.pow(14, PAIR);
-                    str[i - 1] = cards.get(i - 1).strength * (long) Math.pow(14, PAIR);
+                    str[i] = cards.get(i).strength * (long) Math.pow(POW, PAIR);
+                    str[i - 1] = cards.get(i - 1).strength * (long) Math.pow(POW, PAIR);
                 }
             } else if (cards.get(i).strength == cards.get(i - 1).strength) {
                 pair++;
-                str[i] = cards.get(i).strength * (long) Math.pow(14, PAIR);
-                str[i - 1] = cards.get(i - 1).strength * (long) Math.pow(14, PAIR);
+                str[i] = cards.get(i).strength * (long) Math.pow(POW, PAIR);
+                str[i - 1] = cards.get(i - 1).strength * (long) Math.pow(POW, PAIR);
             }
         }
 
@@ -89,30 +91,31 @@ public class HandStrengthCalc {
         //certaines combinaisons, donc on le fait maintenant.
         if (pair == 2) {
             for (int i = 0; i < 5; i++) {
-                if (str[i] > 13) str[i] = cards.get(i).strength * (long) Math.pow(14, D_PAIR);
+                if (str[i] > 13) str[i] = cards.get(i).strength * (long) Math.pow(POW, D_PAIR);
             }
         } else if (pair == 1 && trips) {
             for (int i = 0; i < 5; i++) {
-                if (str[i] > Math.pow(14, D_PAIR)) str[i] = cards.get(i).strength * (long) Math.pow(14, FULL);
+                if (str[i] > Math.pow(POW, D_PAIR)) str[i] = cards.get(i).strength * (long) Math.pow(POW, FULL);
             }
         } else if (straight) {
+            System.out.println("inStraightFlush");
             if (flush) {
                 for (int i = 0; i < 5; i++) {
-                    str[i] = cards.get(i).strength * (long) Math.pow(14, STRAIGHT_FLUSH);
+                    str[i] = cards.get(i).strength * (long) Math.pow(POW, STRAIGHT_FLUSH);
                 }
             } else {
                 for (int i = 0; i < 5; i++) {
-                    str[i] = cards.get(i).strength * (long) Math.pow(14, STRAIGHT);
+                    str[i] = cards.get(i).strength * (long) Math.pow(POW, STRAIGHT);
                 }
             }
         } else if (flush) {
             for (int i = 0; i < 5; i++) {
-                str[i] = cards.get(i).strength * (long) Math.pow(14, FLUSH);
+                str[i] = cards.get(i).strength * (long) Math.pow(POW, FLUSH);
             }
         }
         //TODO add math shenaningans
         for(int i = 0; i < 5; i++){
-            accumulator += str[i];
+            accumulator += str[i]*Math.pow(POW, 8-i*2);
         }
         return accumulator;
     }
