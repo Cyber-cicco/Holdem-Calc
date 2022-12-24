@@ -110,6 +110,7 @@ public class HandStrengthCalc {
                 str[i] = cards.get(i).strength * (long) Math.pow(14, FLUSH);
             }
         }
+        //TODO add math shenaningans
         for(int i = 0; i < 5; i++){
             accumulator += str[i];
         }
