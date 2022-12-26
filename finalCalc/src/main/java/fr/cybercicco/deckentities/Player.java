@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Player {
     public List<Card> hand = new ArrayList<>();
-    public long strength;
+    public double strength;
     public List<Card> combination = new ArrayList<>();
 
     public void setHand(Deck deck, String cards){

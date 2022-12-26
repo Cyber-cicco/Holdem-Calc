@@ -33,7 +33,7 @@ public class CombinationCalc {
                 }
             }
             pointers[lastIndex]++;
-            long strOfCurrCom = HandStrengthCalc.getHandStrength(currentCombination);
+            double strOfCurrCom = HandStrengthCalc.getHandStrength(currentCombination);
             if ( strOfCurrCom > p1.strength){
                 p1.strength = strOfCurrCom;
                 System.out.println("NEW MAX : " + strOfCurrCom);

@@ -2,6 +2,8 @@ package fr.cybercicco.handcalculator;
 
 import fr.cybercicco.deckentities.Card;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -9,17 +11,17 @@ import java.util.List;
  * There's certainly a lot of refactoring to do, but it's fast.
  */
 public class HandStrengthCalc {
+    static final double POW = 2;
+    static final int GAP = 7*2;
+    static final int PAIR = 1*GAP;
+    static final int D_PAIR = 2*GAP;
+    static final int TRIPS = 3*GAP;
+    static final int STRAIGHT = 4*GAP;
+    static final int FLUSH = 5*GAP;
+    static final int FULL = 6*GAP;
+    static final int QUADS = 7*GAP;
+    static final int STRAIGHT_FLUSH = 8*GAP;
 
-    static final int PAIR = 1;
-    static final int D_PAIR = 2;
-    static final int TRIPS = 3;
-    static final int STRAIGHT = 4;
-    static final int FLUSH = 5;
-    static final int FULL = 6;
-    static final int QUADS = 7;
-    static final int STRAIGHT_FLUSH = 8;
-
-    static final int POW = 3;
 
     /**
      * THIS METHOD NEEDS A SORTED LIST TO WORK.
@@ -29,7 +31,7 @@ public class HandStrengthCalc {
      * lists and get which hand is stronger by comparing every card strength
      * one by one.
      */
-    public static long getHandStrength(List<Card> cards) {
+    public static double getHandStrength(List<Card> cards) {
 
         //on déclare les variables permettant de vérifier la nature de la main
         byte pair = 0;
@@ -38,8 +40,9 @@ public class HandStrengthCalc {
         boolean straight = true;
 
         //on déclare les éléments permettant d'obtenir la force de la main.
-        long[] str = {cards.get(0).strength, cards.get(1).strength, cards.get(2).strength, cards.get(3).strength, cards.get(4).strength};
-        long accumulator = 0;
+        double[] str = {(double) cards.get(0).strength, (double) cards.get(1).strength, (double) cards.get(2).strength,
+                (double) cards.get(3).strength, (double) cards.get(4).strength};
+        double accumulator = 0;
 
         //on lance la boucle itérant sur toutes les cartes
         for (int i = 1; i < 5; i++) {
@@ -60,8 +63,8 @@ public class HandStrengthCalc {
                 //Si la carte actuelle est de même force que celle trois rang derrière alors il y a quads.
                 if (cards.get(i).strength == cards.get(i - 3).strength) {
                     trips = false; // on indique qu'il ne s'agit pas de trois cartes identiques mais quatre
-                    for (int j = 0; j > -4; j--) {
-                        str[i + j] = cards.get(i + j).strength * (long) Math.pow(POW, QUADS);
+                    for (int j = 0; j < 5; j++) {
+                        str[j] = cards.get(j).strength * Math.pow(POW, QUADS);
                     }
                 }
             }
@@ -73,17 +76,17 @@ public class HandStrengthCalc {
                     trips = true;
                     pair--; //On décrément la paire, puisqu'il s'agit de trois cartes identiques et non deux
                     for (int j = 0; j > -3; j--) {
-                        str[i + j] = cards.get(i + j).strength * (long) Math.pow(POW, TRIPS);
+                        str[i + j] = cards.get(i + j).strength * Math.pow(POW, TRIPS);
                     }
                 } else if (cards.get(i).strength == cards.get(i - 1).strength) {
                     pair++;
-                    str[i] = cards.get(i).strength * (long) Math.pow(POW, PAIR);
-                    str[i - 1] = cards.get(i - 1).strength * (long) Math.pow(POW, PAIR);
+                    str[i] = cards.get(i).strength * Math.pow(POW, PAIR);
+                    str[i - 1] = cards.get(i - 1).strength * Math.pow(POW, PAIR);
                 }
             } else if (cards.get(i).strength == cards.get(i - 1).strength) {
                 pair++;
-                str[i] = cards.get(i).strength * (long) Math.pow(POW, PAIR);
-                str[i - 1] = cards.get(i - 1).strength * (long) Math.pow(POW, PAIR);
+                str[i] = cards.get(i).strength *  Math.pow(POW, PAIR);
+                str[i - 1] = cards.get(i - 1).strength *  Math.pow(POW, PAIR);
             }
         }
 
@@ -91,31 +94,31 @@ public class HandStrengthCalc {
         //certaines combinaisons, donc on le fait maintenant.
         if (pair == 2) {
             for (int i = 0; i < 5; i++) {
-                if (str[i] > 13) str[i] = cards.get(i).strength * (long) Math.pow(POW, D_PAIR);
+                if (str[i] > 13) str[i] = cards.get(i).strength *  Math.pow(POW, D_PAIR);
             }
         } else if (pair == 1 && trips) {
             for (int i = 0; i < 5; i++) {
-                if (str[i] > Math.pow(POW, D_PAIR)) str[i] = cards.get(i).strength * (long) Math.pow(POW, FULL);
+                str[i] = cards.get(i).strength *  Math.pow(POW, FULL);
             }
         } else if (straight) {
-            System.out.println("inStraightFlush");
             if (flush) {
                 for (int i = 0; i < 5; i++) {
-                    str[i] = cards.get(i).strength * (long) Math.pow(POW, STRAIGHT_FLUSH);
+                    str[i] = cards.get(i).strength * Math.pow(POW, STRAIGHT_FLUSH);
                 }
             } else {
                 for (int i = 0; i < 5; i++) {
-                    str[i] = cards.get(i).strength * (long) Math.pow(POW, STRAIGHT);
+                    str[i] = cards.get(i).strength *  Math.pow(POW, STRAIGHT);
                 }
             }
         } else if (flush) {
             for (int i = 0; i < 5; i++) {
-                str[i] = cards.get(i).strength * (long) Math.pow(POW, FLUSH);
+                str[i] = cards.get(i).strength * Math.pow(POW, FLUSH);
             }
         }
+        //Arrays.sort(str, Collections.reverseOrder());
         //TODO add math shenaningans
         for(int i = 0; i < 5; i++){
-            accumulator += str[i]*Math.pow(POW, 8-i*2);
+            accumulator += str[i]*Math.pow(10,4-i);
         }
         return accumulator;
     }

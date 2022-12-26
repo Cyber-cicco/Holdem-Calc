@@ -18,8 +18,8 @@ public class Deck {
      */
     public Deck(){
         for(int h = 0; h <4; h++){
-            for(int i = 1; i <14; i++){
-                allCards.add(new Card(i+10, h+1));
+            for(int i = 2; i <15; i++){
+                allCards.add(new Card(i+20, h+1));
             }
         }
         clearCards();
