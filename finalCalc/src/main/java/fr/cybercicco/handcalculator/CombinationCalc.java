@@ -36,9 +36,7 @@ public class CombinationCalc {
             double strOfCurrCom = HandStrengthCalc.getHandStrength(currentCombination);
             if ( strOfCurrCom > p1.strength){
                 p1.strength = strOfCurrCom;
-                System.out.println("NEW MAX : " + strOfCurrCom);
             }
-            System.out.println(currentCombination.stream().map(c -> StringCardConverter.getStringFromCard(c)).toList());
             currentCombination.clear();
         }
         for (int i = pointers.length - 1; i >= 0; i--) {

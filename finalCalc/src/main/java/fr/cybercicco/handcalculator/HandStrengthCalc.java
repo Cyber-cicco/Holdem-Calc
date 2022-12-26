@@ -40,7 +40,7 @@ public class HandStrengthCalc {
         boolean straight = true;
 
         //on déclare les éléments permettant d'obtenir la force de la main.
-        double[] str = {(double) cards.get(0).strength, (double) cards.get(1).strength, (double) cards.get(2).strength,
+        Double[] str = { (double) cards.get(0).strength,  (double) cards.get(1).strength,(double) cards.get(2).strength,
                 (double) cards.get(3).strength, (double) cards.get(4).strength};
         double accumulator = 0;
 
@@ -94,7 +94,7 @@ public class HandStrengthCalc {
         //certaines combinaisons, donc on le fait maintenant.
         if (pair == 2) {
             for (int i = 0; i < 5; i++) {
-                if (str[i] > 13) str[i] = cards.get(i).strength *  Math.pow(POW, D_PAIR);
+                if (str[i] > 24) str[i] = cards.get(i).strength *  Math.pow(POW, D_PAIR);
             }
         } else if (pair == 1 && trips) {
             for (int i = 0; i < 5; i++) {
@@ -115,10 +115,9 @@ public class HandStrengthCalc {
                 str[i] = cards.get(i).strength * Math.pow(POW, FLUSH);
             }
         }
-        //Arrays.sort(str, Collections.reverseOrder());
-        //TODO add math shenaningans
+        Arrays.sort(str, Collections.reverseOrder());
         for(int i = 0; i < 5; i++){
-            accumulator += str[i]*Math.pow(10,4-i);
+            accumulator += str[i]*Math.pow(6,4-i);
         }
         return accumulator;
     }

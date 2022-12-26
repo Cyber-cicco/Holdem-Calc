@@ -21,6 +21,13 @@ public class Showdown {
         Collections.sort(p2Combination);
 
         CombinationCalc.setBestOfFiveCards(p1, p1Combination);
+
+    }
+
+    public void testFunction() {
+        for (int i = 0; i < 5; i++) {
+
+        }
     }
 
 }

@@ -22,10 +22,11 @@ public class Main {
 
         p1.setHand(deck, "AhAd");
         p2.setHand(deck, "AcKs");
-        //board.createRandomBoard(deck);
+        board.createRandomBoard(deck);
 
-        //showdown.getWinner(p1,p2,board.getCommunityCards());
+        showdown.getWinner(p1,p2,board.getCommunityCards());
 
+        /*
         String[] comb1 = {"Ah", "As", "Qh", "3s", "3h"};
         String[] comb2 = {"Ah", "As", "4h", "3s", "3d"};
 
@@ -38,14 +39,13 @@ public class Main {
 
         System.out.println(str1 < str2);
 
-
+*/
         Date date = new Date();
         long time1 = date.getTime();
-        for(int i = 0; i < 20000000; i++){
-            //deck.clearCards();
-            //board.resetRandomBoard(deck);
-            //board.createRandomBoard(deck);
-            HandStrengthCalc.getHandStrength(board.getCommunityCards());
+        for(int i = 0; i < 20_000_000; i++){
+            board.createRandomBoard(deck);
+            //showdown.getWinner(p1, p2, board.getCommunityCards());
+            showdown.testFunction();
         }
         System.out.println(new Date().getTime()-time1);
 

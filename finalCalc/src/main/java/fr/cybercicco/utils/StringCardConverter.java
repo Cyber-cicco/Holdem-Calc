@@ -43,11 +43,11 @@ public class StringCardConverter {
 
     public static String getStringFromCard(Card card){
         return switch (card.strength) {
-            case 110 -> "T" + intToChar[card.suite - 1];
-            case 111 -> "J" + intToChar[card.suite - 1];
-            case 112 -> "Q" + intToChar[card.suite - 1];
-            case 113 -> "K" + intToChar[card.suite - 1];
-            case 114 -> "A" + intToChar[card.suite - 1];
+            case 30 -> "T" + intToChar[card.suite - 1];
+            case 31 -> "J" + intToChar[card.suite - 1];
+            case 32 -> "Q" + intToChar[card.suite - 1];
+            case 33 -> "K" + intToChar[card.suite - 1];
+            case 34 -> "A" + intToChar[card.suite - 1];
             default -> "" + (card.strength - 20) + intToChar[card.suite - 1];
         };
     }
