@@ -45,7 +45,7 @@ public class Main {
         for(int i = 0; i < 20_000_000; i++){
             board.createRandomBoard(deck);
             //showdown.getWinner(p1, p2, board.getCommunityCards());
-            showdown.testFunction();
+            HandStrengthCalc.testFunction(board.getCommunityCards());
         }
         System.out.println(new Date().getTime()-time1);
 
