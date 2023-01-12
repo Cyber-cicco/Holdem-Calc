@@ -20,8 +20,8 @@ public class HandStrTest {
     private static final int QUADS = 7;
     private static final int STRAIGHT_FLUSH = 8;
     private static final String[] strFlu1 = {"As", "Ks", "Qs", "Js", "Ts"};
-    private static final String[] quads1 = {"As", "Ah", "Ad", "Ac", "Ts"};
-    private static final String[] full1 = {"Kc", "Ks", "Qs", "Qh", "Qd"};
+    private static final String[] quads1 = {"As", "Ah", "Ad", "Ac", "Ks"};
+    private static final String[] full1 = {"Kc", "Ks", "Kd", "3h", "3d"};
     private static final String[] flu1 = {"As", "6s", "4s", "3s", "2s"};
     private static final String[] str1 = {"6s", "5s", "4h", "3s", "2s"};
     private static final String[] trips1 = {"As", "Ah", "Ad", "3s", "2s"};
@@ -58,6 +58,36 @@ public class HandStrTest {
     @Test
     public void testStrengthFromFlush(){
         String[] flu2 = {"Ks", "Qs", "Js", "Ts", "8s"};
+        String[] flu3 = {"Qs", "Ts", "8s", "5s", "4s"};
+        String[] flu4 = {"Ts", "9s", "8s", "5s", "4s"};
         assert HandStrengthCalc.getHandStrength(createCardList(flu1)) > HandStrengthCalc.getHandStrength(createCardList(flu2));
+        assert HandStrengthCalc.getHandStrength(createCardList(flu2)) > HandStrengthCalc.getHandStrength(createCardList(flu3));
+        assert HandStrengthCalc.getHandStrength(createCardList(flu3)) > HandStrengthCalc.getHandStrength(createCardList(flu4));
+    }
+
+    @Test
+    public void testStrengthFromHcard(){
+        String[] hcard2 = {"As", "Ks", "Qs", "Js", "8h"};
+        String[] hcard3 = {"As", "Ks", "Qs", "Ts", "9h"};
+        assert HandStrengthCalc.getHandStrength(createCardList(hcard1)) > HandStrengthCalc.getHandStrength(createCardList(hcard2));
+        assert HandStrengthCalc.getHandStrength(createCardList(hcard2)) > HandStrengthCalc.getHandStrength(createCardList(hcard3));
+    }
+
+    @Test
+    void testFull(){
+        String[] full2 = {"Kd", "Kh", "Ks", "2h", "2d"};
+        String[] full3 = {"Ad", "Ah", "2s", "2h", "2d"};
+        String[] full4 = {"3d", "3h", "3s", "2h", "2d"};
+        assert HandStrengthCalc.getHandStrength(createCardList(full1)) > HandStrengthCalc.getHandStrength(createCardList(full2));
+        assert HandStrengthCalc.getHandStrength(createCardList(full2)) > HandStrengthCalc.getHandStrength(createCardList(full3));
+        assert HandStrengthCalc.getHandStrength(createCardList(full4)) > HandStrengthCalc.getHandStrength(createCardList(full3));
+    }
+
+    @Test
+    void testPair(){
+        String[] pair2 = {"As", "Ah", "Qs", "Js", "9s"};
+        String[] pair3 = {"As", "Ah", "Ks", "3s", "2s"};
+        assert HandStrengthCalc.getHandStrength(createCardList(pair1)) > HandStrengthCalc.getHandStrength(createCardList(pair2));
+        assert HandStrengthCalc.getHandStrength(createCardList(pair3)) > HandStrengthCalc.getHandStrength(createCardList(pair2));
     }
 }

@@ -2,7 +2,6 @@ package fr.cybercicco.handcalculator;
 
 import fr.cybercicco.deckentities.Card;
 import fr.cybercicco.deckentities.Player;
-import fr.cybercicco.utils.StringCardConverter;
 
 import java.util.ArrayList;
 import java.util.List;

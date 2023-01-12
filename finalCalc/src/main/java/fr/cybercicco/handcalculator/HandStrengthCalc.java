@@ -11,8 +11,8 @@ import java.util.*;
 public class HandStrengthCalc {
 
     static final double RATIO_TRIPS = 0.1;
-    static final double RATIO_PAIR = 0.001;
-    static final double RATIO_HIGH = 0.0000001;
+    static final double RATIO_PAIR = 0.0001;
+    static final double RATIO_HIGH = 0.00000001;
     static final int PAIR = 1;
     static final int D_PAIR = 2;
     static final int TRIPS = 3;
@@ -100,8 +100,9 @@ public class HandStrengthCalc {
             }
         } else if (flush) {
             strength = setRelativeStrength(cards, flags,FLUSH);
+        } else{
+            strength = setRelativeStrength(cards, flags, 0);
         }
-        //Arrays.sort(str, Collections.reverseOrder());
         return strength;
     }
 
