@@ -17,9 +17,9 @@ public class Deck {
      * is no duplicate
      */
     public Deck(){
-        for(int h = 0; h <4; h++){
+        for(int h = 1; h <=4; h++){
             for(int i = 2; i <15; i++){
-                allCards.add(new Card(i+20, h+1));
+                allCards.add(new Card(i, h));
             }
         }
         clearCards();

@@ -78,11 +78,11 @@ public class HandStrTest {
         trips.add(new Card(26,4));
         trips.add(new Card(25,2));
 
-        dpair.add(new Card(29,1));
-        dpair.add(new Card(29,2));
-        dpair.add(new Card(26,1));
-        dpair.add(new Card(25,2));
-        dpair.add(new Card(25,3));
+        dpair.add(new Card(14,1));
+        dpair.add(new Card(14,2));
+        dpair.add(new Card(13,1));
+        dpair.add(new Card(2,2));
+        dpair.add(new Card(2,3));
 
         pair.add(new Card(29,1));
         pair.add(new Card(29,2));
@@ -112,6 +112,16 @@ public class HandStrTest {
     }
     @Test
     public void testStrengthFromSameCategory(){
+        List<Card> dpair2 = new ArrayList<>();
+        dpair2.add(new Card(14,1));
+        dpair2.add(new Card(14,2));
+        dpair2.add(new Card(3,1));
+        dpair2.add(new Card(3,2));
+        dpair2.add(new Card(2,3));
 
+        double dpairStr = HandStrengthCalc.getHandStrength(dpair);
+        double dpair2Str = HandStrengthCalc.getHandStrength(dpair2);
+        System.out.println(dpair2Str + " VS " +dpairStr );
+        assert  dpair2Str > dpairStr;
     }
 }

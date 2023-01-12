@@ -17,8 +17,6 @@ public class StringCardConverter {
             'h', 4
             );
     static final char[] intToChar = {'c', 'd', 's', 'h'};
-    static final int charToStrIncr = 9;
-    static final int intToCharIncr = 1;
 
     /**
      *
@@ -31,11 +29,11 @@ public class StringCardConverter {
     public static Card getCardFromString(String card, Deck deck){
         int strength = 0;
         switch (card.charAt(0)){
-           case 'T' -> strength = 30;
-           case 'J' -> strength = 31;
-           case 'Q' -> strength = 32;
-           case 'K' -> strength = 33;
-           case 'A' -> strength = 34;
+           case 'T' -> strength = 10;
+           case 'J' -> strength = 11;
+           case 'Q' -> strength = 12;
+           case 'K' -> strength = 13;
+           case 'A' -> strength = 14;
            default -> strength = Character.getNumericValue(card.charAt(0)) +20;
        }
         return deck.getCardFromDeck(strength, cdsh.get(card.charAt(1)));
@@ -43,11 +41,11 @@ public class StringCardConverter {
 
     public static String getStringFromCard(Card card){
         return switch (card.strength) {
-            case 30 -> "T" + intToChar[card.suite - 1];
-            case 31 -> "J" + intToChar[card.suite - 1];
-            case 32 -> "Q" + intToChar[card.suite - 1];
-            case 33 -> "K" + intToChar[card.suite - 1];
-            case 34 -> "A" + intToChar[card.suite - 1];
+            case 10 -> "T" + intToChar[card.suite - 1];
+            case 11 -> "J" + intToChar[card.suite - 1];
+            case 12 -> "Q" + intToChar[card.suite - 1];
+            case 13 -> "K" + intToChar[card.suite - 1];
+            case 14 -> "A" + intToChar[card.suite - 1];
             default -> "" + (card.strength - 20) + intToChar[card.suite - 1];
         };
     }

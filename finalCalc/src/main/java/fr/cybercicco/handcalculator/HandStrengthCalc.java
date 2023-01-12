@@ -10,6 +10,9 @@ import java.util.*;
  */
 public class HandStrengthCalc {
 
+    static final double RATIO_TRIPS = 0.1;
+    static final double RATIO_PAIR = 0.001;
+    static final double RATIO_HIGH = 0.00001;
     static final int PAIR = 1;
     static final int D_PAIR = 2;
     static final int TRIPS = 3;
@@ -37,8 +40,8 @@ public class HandStrengthCalc {
         float strength = 0;
 
         //On crée une map permettant de flag les cartes de la main comme kicker ou non
-        Map<Card, Boolean> flags = new HashMap<>();
-        cards.forEach((c) -> flags.put(c, true));
+        Map<Card, Double> flags = new HashMap<>();
+        cards.forEach((c) -> flags.put(c, 0.0000001));
 
         //on lance la boucle itérant sur toutes les cartes
         for (int i = 1; i < 5; i++) {
@@ -57,7 +60,7 @@ public class HandStrengthCalc {
                 if (cards.get(i).strength == cards.get(i - 3).strength) {
                     trips = false; // on indique qu'il ne s'agit pas de trois cartes identiques mais quatre
                     quads = true;
-                    flags.put(cards.get(i), false);
+                    flags.put(cards.get(i), RATIO_TRIPS);
                 }
             }
             if (pair > 0) {
@@ -65,15 +68,15 @@ public class HandStrengthCalc {
                 if (cards.get(i).strength == cards.get(i - 2).strength) {
                     trips = true;
                     pair--; //On décrément la paire, puisqu'il s'agit de trois cartes identiques et non deux
-                    flags.put(cards.get(i), false);
+                    flags.put(cards.get(i), RATIO_TRIPS);
                 } else if (cards.get(i).strength == cards.get(i - 1).strength) {
                     pair++;
-                    flags.put(cards.get(i), false);
+                    flags.put(cards.get(i), RATIO_PAIR);
                 }
             } else if (cards.get(i).strength == cards.get(i - 1).strength) {
                 pair++;
-                flags.put(cards.get(i), false);
-                flags.put(cards.get(i-1), false);
+                flags.put(cards.get(i), RATIO_PAIR);
+                flags.put(cards.get(i-1), RATIO_PAIR);
             }
         }
         //code assez parlant (relativement au reste), donc juste on a pas set correctement la force des mains pour
@@ -82,6 +85,11 @@ public class HandStrengthCalc {
           strength = QUADS;
         } else if (pair == 2) {
             strength = D_PAIR;
+            double i = 0.1;
+            for(Card card : cards){
+                strength += card.strength * flags.get(card) * i;
+                i *= 0.1;
+            }
         } else if (pair == 1) {
             if(trips){
                 strength = FULL;
