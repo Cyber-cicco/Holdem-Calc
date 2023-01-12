@@ -13,7 +13,7 @@ public class Card implements Comparable<Card>{
      * and setters
      * All the logical bits of the user interface should in now way get implemented here.
      */
-     Card(int strength, int suite){
+     public Card(int strength, int suite){
         this.strength = strength;
         this.suite = suite;
     }

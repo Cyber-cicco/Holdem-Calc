@@ -42,10 +42,11 @@ public class Main {
 */
         Date date = new Date();
         long time1 = date.getTime();
-        for(int i = 0; i < 20_000_000; i++){
+        for(int i = 0; i < 5_000_000; i++){
             board.createRandomBoard(deck);
             //showdown.getWinner(p1, p2, board.getCommunityCards());
-            HandStrengthCalc.testFunction(board.getCommunityCards());
+            //HandStrengthCalc.testFunction(board.getCommunityCards());
+            HandStrengthCalc.getHandStrength(board.getCommunityCards());
         }
         System.out.println(new Date().getTime()-time1);
 

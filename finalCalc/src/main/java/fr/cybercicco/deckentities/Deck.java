@@ -39,8 +39,6 @@ public class Deck {
                 return cards.remove(i);
             }
         }
-        System.out.println(StringCardConverter.getStringFromCard(new Card(strength, suite)));
-        System.out.println(cards.stream().map(StringCardConverter::getStringFromCard).toList());
         throw new RuntimeException("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     }
 
