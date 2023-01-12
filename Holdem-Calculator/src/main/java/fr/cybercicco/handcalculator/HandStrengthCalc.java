@@ -6,7 +6,6 @@ import java.util.*;
 
 /**
  * Class providing static methods to determinate how strong a hand is.
- * There's certainly a lot of refactoring to do, but it's fast.
  */
 public class HandStrengthCalc {
 
@@ -36,7 +35,7 @@ public class HandStrengthCalc {
         boolean flush = true;
         boolean straight = true;
         boolean quads = false;
-        double strength = 0;
+        double strength;
 
         //On crée une map permettant de flag les cartes de la main comme kicker ou non
         Map<Card, Double> flags = new HashMap<>();
@@ -113,7 +112,7 @@ public class HandStrengthCalc {
      * @param mainStr Main strength of combination
      * @return Total strength of the hand
      */
-    public static double setRelativeStrength(List<Card> cards, Map<Card, Double> flags, double mainStr){
+    private static double setRelativeStrength(List<Card> cards, Map<Card, Double> flags, double mainStr){
         double i = 0.1;
         double str = 0;
         for(Card card : cards){

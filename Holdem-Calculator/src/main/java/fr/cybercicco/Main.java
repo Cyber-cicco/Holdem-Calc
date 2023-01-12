@@ -4,7 +4,6 @@ import fr.cybercicco.deckentities.Board;
 import fr.cybercicco.deckentities.Card;
 import fr.cybercicco.deckentities.Deck;
 import fr.cybercicco.deckentities.Player;
-import fr.cybercicco.handcalculator.CombinationCalc;
 import fr.cybercicco.handcalculator.HandStrengthCalc;
 import fr.cybercicco.handcalculator.Showdown;
 
@@ -18,7 +17,6 @@ public class Main {
     public static void main(String[] args) {
         Deck deck = new Deck();
         Board board = new Board();
-        Showdown showdown = new Showdown();
 
         Player p1 = new Player();
         Player p2 = new Player();
@@ -27,7 +25,7 @@ public class Main {
         p2.setHand(deck, "AcKs");
         board.createRandomBoard(deck);
 
-        showdown.getWinner(p1,p2,board.getCommunityCards());
+        Showdown.getWinner(p1,p2,board.getCommunityCards());
 
         /*
         String[] comb1 = {"Ah", "As", "Qh", "3s", "3h"};
@@ -51,7 +49,7 @@ public class Main {
         dpair.add(new Card(13,1));
         dpair.add(new Card(2,2));
         dpair.add(new Card(2,3));
-        for(int i = 0; i < 5_000_000; i++){
+        for(int i = 0; i < 2_500_000; i++){
             //showdown.getWinner(p1, p2, board.getCommunityCards());
             //HandStrengthCalc.testFunction(board.getCommunityCards());
             HandStrengthCalc.getHandStrength(dpair);
