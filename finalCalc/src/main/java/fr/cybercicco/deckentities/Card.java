@@ -3,7 +3,6 @@ package fr.cybercicco.deckentities;
 public class Card implements Comparable<Card>{
     public int strength;
     public final int suite;
-
     /**
      *
      * @param strength number of the card, from 1 to 13, 13 being Ace, 1 being 2

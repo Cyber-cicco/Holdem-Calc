@@ -2,16 +2,14 @@ package fr.cybercicco.handcalculator;
 
 import fr.cybercicco.deckentities.Card;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Class providing static methods to determinate how strong a hand is.
  * There's certainly a lot of refactoring to do, but it's fast.
  */
 public class HandStrengthCalc {
-    static final double POW = 2;
+
     static final int PAIR = 1;
     static final int D_PAIR = 2;
     static final int TRIPS = 3;
@@ -20,8 +18,6 @@ public class HandStrengthCalc {
     static final int FULL = 6;
     static final int QUADS = 7;
     static final int STRAIGHT_FLUSH = 8;
-
-
     /**
      * THIS METHOD NEEDS A SORTED LIST TO WORK.
      * Changes hand card strength based on the hand rank in poker.
@@ -40,20 +36,20 @@ public class HandStrengthCalc {
         boolean quads = false;
         float strength = 0;
 
+        //On crée une map permettant de flag les cartes de la main comme kicker ou non
+        Map<Card, Boolean> flags = new HashMap<>();
+        cards.forEach((c) -> flags.put(c, true));
 
         //on lance la boucle itérant sur toutes les cartes
         for (int i = 1; i < 5; i++) {
-
             //Si la carte actuelle n'est pas égale à un de moins que la carte avant, alors ce n'est pas une suite
             if (straight && (cards.get(i).strength != cards.get(i-1).strength - 1)) {
                 straight = false;
             }
-
             //Si la couleur de la carte actuelle n'est pas égale à celle de de la carte avant, alors ce n'est pas une flush
             if (flush && (cards.get(i).suite != cards.get(i - 1).suite)) {
                 flush = false;
             }
-
             //Bloc de code ou toute situation est mutuellement exclusive
             //Si on a déjà identifié que trois cartes étaient identiques:
             if (trips) {
@@ -61,23 +57,25 @@ public class HandStrengthCalc {
                 if (cards.get(i).strength == cards.get(i - 3).strength) {
                     trips = false; // on indique qu'il ne s'agit pas de trois cartes identiques mais quatre
                     quads = true;
+                    flags.put(cards.get(i), false);
                 }
             }
-
             if (pair > 0) {
-
                 //On test s'il y a une carte de même force deux rangs avant. Si c'est le cas, il y a brelan
                 if (cards.get(i).strength == cards.get(i - 2).strength) {
                     trips = true;
                     pair--; //On décrément la paire, puisqu'il s'agit de trois cartes identiques et non deux
+                    flags.put(cards.get(i), false);
                 } else if (cards.get(i).strength == cards.get(i - 1).strength) {
                     pair++;
+                    flags.put(cards.get(i), false);
                 }
             } else if (cards.get(i).strength == cards.get(i - 1).strength) {
                 pair++;
+                flags.put(cards.get(i), false);
+                flags.put(cards.get(i-1), false);
             }
         }
-
         //code assez parlant (relativement au reste), donc juste on a pas set correctement la force des mains pour
         //certaines combinaisons, donc on le fait maintenant.
         if (quads){

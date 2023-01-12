@@ -109,6 +109,9 @@ public class HandStrTest {
         assertEquals( (int) HandStrengthCalc.getHandStrength(dpair), D_PAIR);
         assertEquals( (int) HandStrengthCalc.getHandStrength(pair), PAIR);
         assertEquals( (int) HandStrengthCalc.getHandStrength(hcard), 0);
+    }
+    @Test
+    public void testStrengthFromSameCategory(){
 
     }
 }
