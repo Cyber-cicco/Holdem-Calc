@@ -60,11 +60,11 @@ public class HandStrTest {
         full.add(new Card(25,2));
         full.add(new Card(25,3));
 
-        flu.add(new Card(34,1));
-        flu.add(new Card(31,1));
-        flu.add(new Card(30,1));
-        flu.add(new Card(23,1));
-        flu.add(new Card(22,1));
+        flu.add(new Card(14,1));
+        flu.add(new Card(6,1));
+        flu.add(new Card(5,1));
+        flu.add(new Card(4,1));
+        flu.add(new Card(3,1));
 
         str.add(new Card(34, 1));
         str.add(new Card(33, 1));
@@ -111,7 +111,7 @@ public class HandStrTest {
         assertEquals( (int) HandStrengthCalc.getHandStrength(hcard), 0);
     }
     @Test
-    public void testStrengthFromSameCategory(){
+    public void testStrengthFromDPair(){
         List<Card> dpair2 = new ArrayList<>();
         dpair2.add(new Card(14,1));
         dpair2.add(new Card(14,2));
@@ -121,7 +121,18 @@ public class HandStrTest {
 
         double dpairStr = HandStrengthCalc.getHandStrength(dpair);
         double dpair2Str = HandStrengthCalc.getHandStrength(dpair2);
-        System.out.println(dpair2Str + " VS " +dpairStr );
         assert  dpair2Str > dpairStr;
+    }
+
+    @Test
+    public void testStrengthFromFlush(){
+        List<Card> flu2 = new ArrayList<>();
+        flu2.add(new Card(13,1));
+        flu2.add(new Card(12,1));
+        flu2.add(new Card(11,1));
+        flu2.add(new Card(10,1));
+        flu2.add(new Card(8,1));
+
+        assert HandStrengthCalc.getHandStrength(flu) > HandStrengthCalc.getHandStrength(flu2);
     }
 }

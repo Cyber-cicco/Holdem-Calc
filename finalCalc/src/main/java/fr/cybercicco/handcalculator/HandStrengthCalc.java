@@ -12,7 +12,7 @@ public class HandStrengthCalc {
 
     static final double RATIO_TRIPS = 0.1;
     static final double RATIO_PAIR = 0.001;
-    static final double RATIO_HIGH = 0.00001;
+    static final double RATIO_HIGH = 0.0000001;
     static final int PAIR = 1;
     static final int D_PAIR = 2;
     static final int TRIPS = 3;
@@ -37,11 +37,11 @@ public class HandStrengthCalc {
         boolean flush = true;
         boolean straight = true;
         boolean quads = false;
-        float strength = 0;
+        double strength = 0;
 
         //On crée une map permettant de flag les cartes de la main comme kicker ou non
         Map<Card, Double> flags = new HashMap<>();
-        cards.forEach((c) -> flags.put(c, 0.0000001));
+        cards.forEach((c) -> flags.put(c, RATIO_HIGH));
 
         //on lance la boucle itérant sur toutes les cartes
         for (int i = 1; i < 5; i++) {
@@ -82,32 +82,35 @@ public class HandStrengthCalc {
         //code assez parlant (relativement au reste), donc juste on a pas set correctement la force des mains pour
         //certaines combinaisons, donc on le fait maintenant.
         if (quads){
-          strength = QUADS;
+            strength = setRelativeStrength(cards, flags, strength,QUADS);
         } else if (pair == 2) {
-            strength = D_PAIR;
-            double i = 0.1;
-            for(Card card : cards){
-                strength += card.strength * flags.get(card) * i;
-                i *= 0.1;
-            }
+            strength = setRelativeStrength(cards, flags, strength, D_PAIR);
         } else if (pair == 1) {
             if(trips){
-                strength = FULL;
+                strength = setRelativeStrength(cards, flags, strength,FULL);
             } else {
-                strength = PAIR;
+                strength = setRelativeStrength(cards, flags, strength,PAIR);
             }
         } else if (trips){
-            strength = TRIPS;
+            strength = setRelativeStrength(cards, flags, strength,TRIPS);
         } else if (straight) {
             if (flush) {
-                strength = STRAIGHT_FLUSH;
+                strength = setRelativeStrength(cards, flags, strength,STRAIGHT_FLUSH);
             } else {
-                strength = STRAIGHT;
+                strength = setRelativeStrength(cards, flags, strength,STRAIGHT);
             }
         } else if (flush) {
-            strength = FLUSH;
+            strength = setRelativeStrength(cards, flags, strength,FLUSH);
         }
         //Arrays.sort(str, Collections.reverseOrder());
         return strength;
+    }
+    public static double setRelativeStrength(List<Card> cards, Map<Card, Double> flags, double str, double mainStr){
+        double i = 0.1;
+        for(Card card : cards){
+            str += card.strength * flags.get(card) * i;
+            i *= 0.1;
+        }
+        return str + mainStr;
     }
 }
