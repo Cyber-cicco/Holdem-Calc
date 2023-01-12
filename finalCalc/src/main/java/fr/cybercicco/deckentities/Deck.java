@@ -1,7 +1,7 @@
 package fr.cybercicco.deckentities;
 
 
-import fr.cybercicco.utils.StringCardConverter;
+import fr.cybercicco.utils.CardException;
 
 import java.util.*;
 
@@ -39,7 +39,7 @@ public class Deck {
                 return cards.remove(i);
             }
         }
-        throw new RuntimeException("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        throw new CardException("The provided card doesn't exist : " + strength + " " + suite);
     }
 
     public Card getRandomCard(){

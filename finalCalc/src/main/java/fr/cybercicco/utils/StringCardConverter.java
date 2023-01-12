@@ -3,7 +3,6 @@ package fr.cybercicco.utils;
 import fr.cybercicco.deckentities.Card;
 import fr.cybercicco.deckentities.Deck;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -27,16 +26,27 @@ public class StringCardConverter {
      * an object with parameters optimised for algorithms
      */
     public static Card getCardFromString(String card, Deck deck){
-        int strength = 0;
-        switch (card.charAt(0)){
-           case 'T' -> strength = 10;
-           case 'J' -> strength = 11;
-           case 'Q' -> strength = 12;
-           case 'K' -> strength = 13;
-           case 'A' -> strength = 14;
-           default -> strength = Character.getNumericValue(card.charAt(0)) +20;
-       }
+        int strength = getStrength(card);
         return deck.getCardFromDeck(strength, cdsh.get(card.charAt(1)));
+    }
+
+    public static Card getCardFromString(String card){
+        int strength;
+        strength = getStrength(card);
+        return new Card(strength, cdsh.get(card.charAt(1)));
+    }
+
+    private static int getStrength(String card) {
+        int strength;
+        switch (card.charAt(0)){
+            case 'T' -> strength = 10;
+            case 'J' -> strength = 11;
+            case 'Q' -> strength = 12;
+            case 'K' -> strength = 13;
+            case 'A' -> strength = 14;
+            default -> strength = Character.getNumericValue(card.charAt(0));
+        }
+        return strength;
     }
 
     public static String getStringFromCard(Card card){

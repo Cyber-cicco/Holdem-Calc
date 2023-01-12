@@ -23,11 +23,10 @@ public class HandStrengthCalc {
     static final int STRAIGHT_FLUSH = 8;
     /**
      * THIS METHOD NEEDS A SORTED LIST TO WORK.
-     * Changes hand card strength based on the hand rank in poker.
-     * Sorting the array based on hand strength after it is given
-     * to this function should make it so you can compare two or more
-     * lists and get which hand is stronger by comparing every card strength
-     * one by one.
+     * Takes a list of 5 cards and returns a double
+     * based on its strength, that can be used to
+     * compare the strength of two hands.
+     * As simple as that.
      */
     public static double getHandStrength(List<Card> cards) {
 
@@ -82,31 +81,40 @@ public class HandStrengthCalc {
         //code assez parlant (relativement au reste), donc juste on a pas set correctement la force des mains pour
         //certaines combinaisons, donc on le fait maintenant.
         if (quads){
-            strength = setRelativeStrength(cards, flags, strength,QUADS);
+            strength = setRelativeStrength(cards, flags,QUADS);
         } else if (pair == 2) {
-            strength = setRelativeStrength(cards, flags, strength, D_PAIR);
+            strength = setRelativeStrength(cards, flags, D_PAIR);
         } else if (pair == 1) {
             if(trips){
-                strength = setRelativeStrength(cards, flags, strength,FULL);
+                strength = setRelativeStrength(cards, flags,FULL);
             } else {
-                strength = setRelativeStrength(cards, flags, strength,PAIR);
+                strength = setRelativeStrength(cards, flags,PAIR);
             }
         } else if (trips){
-            strength = setRelativeStrength(cards, flags, strength,TRIPS);
+            strength = setRelativeStrength(cards, flags,TRIPS);
         } else if (straight) {
             if (flush) {
-                strength = setRelativeStrength(cards, flags, strength,STRAIGHT_FLUSH);
+                strength = setRelativeStrength(cards, flags,STRAIGHT_FLUSH);
             } else {
-                strength = setRelativeStrength(cards, flags, strength,STRAIGHT);
+                strength = setRelativeStrength(cards, flags,STRAIGHT);
             }
         } else if (flush) {
-            strength = setRelativeStrength(cards, flags, strength,FLUSH);
+            strength = setRelativeStrength(cards, flags,FLUSH);
         }
         //Arrays.sort(str, Collections.reverseOrder());
         return strength;
     }
-    public static double setRelativeStrength(List<Card> cards, Map<Card, Double> flags, double str, double mainStr){
+
+    /**
+     * Method to decide which of two hands in the same category is the strongest
+     * @param cards list of cards
+     * @param flags map to get a weaker multiplier if card is a kicker
+     * @param mainStr Main strength of combination
+     * @return Total strength of the hand
+     */
+    public static double setRelativeStrength(List<Card> cards, Map<Card, Double> flags, double mainStr){
         double i = 0.1;
+        double str = 0;
         for(Card card : cards){
             str += card.strength * flags.get(card) * i;
             i *= 0.1;

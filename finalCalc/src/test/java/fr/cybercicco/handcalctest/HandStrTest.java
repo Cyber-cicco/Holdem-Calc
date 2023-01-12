@@ -2,137 +2,62 @@ package fr.cybercicco.handcalctest;
 
 import fr.cybercicco.deckentities.Card;
 import fr.cybercicco.handcalculator.HandStrengthCalc;
-import org.junit.jupiter.api.BeforeAll;
+import fr.cybercicco.utils.StringCardConverter;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class HandStrTest {
+    private static final int PAIR = 1;
+    private static final int D_PAIR = 2;
+    private static final int TRIPS = 3;
+    private static final int STRAIGHT = 4;
+    private static final int FLUSH = 5;
+    private static final int FULL = 6;
+    private static final int QUADS = 7;
+    private static final int STRAIGHT_FLUSH = 8;
+    private static final String[] strFlu1 = {"As", "Ks", "Qs", "Js", "Ts"};
+    private static final String[] quads1 = {"As", "Ah", "Ad", "Ac", "Ts"};
+    private static final String[] full1 = {"Kc", "Ks", "Qs", "Qh", "Qd"};
+    private static final String[] flu1 = {"As", "6s", "4s", "3s", "2s"};
+    private static final String[] str1 = {"6s", "5s", "4h", "3s", "2s"};
+    private static final String[] trips1 = {"As", "Ah", "Ad", "3s", "2s"};
+    private static final String[] dpair1 = {"As", "Ah", "Qs", "2h", "2s"};
+    private static final String[] pair1 = {"As", "Ah", "Qs", "Js", "Ts"};
+    private static final String[] hcard1 = {"As", "Ks", "Qs", "Js", "9h"};
 
-    private static List<Card> strFlu;
-    private static List<Card> quads;
-    private static List<Card> full;
-    private static List<Card> flu;
-    private static List<Card> str;
-    private static List<Card> trips;
-    private static List<Card> dpair;
-    private static List<Card> pair;
-    private static List<Card> hcard;
-    static final int PAIR = 1;
-    static final int D_PAIR = 2;
-    static final int TRIPS = 3;
-    static final int STRAIGHT = 4;
-    static final int FLUSH = 5;
-    static final int FULL = 6;
-    static final int QUADS = 7;
-    static final int STRAIGHT_FLUSH = 8;
-
-    @BeforeAll
-    public static void makeLists(){
-        strFlu = new ArrayList<>();
-        quads = new ArrayList<>();
-        full = new ArrayList<>();
-        flu = new ArrayList<>();
-        str = new ArrayList<>();
-        trips = new ArrayList<>();
-        dpair = new ArrayList<>();
-        pair = new ArrayList<>();
-        hcard = new ArrayList<>();
-
-        strFlu.add(new Card(34, 1));
-        strFlu.add(new Card(33, 1));
-        strFlu.add(new Card(32,1));
-        strFlu.add(new Card(31,1));
-        strFlu.add(new Card(30,1));
-
-        quads.add(new Card(30,1));
-        quads.add(new Card(30,2));
-        quads.add(new Card(30,3));
-        quads.add(new Card(30,4));
-        quads.add(new Card(25,2));
-
-        full.add(new Card(29,1));
-        full.add(new Card(29,2));
-        full.add(new Card(25,1));
-        full.add(new Card(25,2));
-        full.add(new Card(25,3));
-
-        flu.add(new Card(14,1));
-        flu.add(new Card(6,1));
-        flu.add(new Card(5,1));
-        flu.add(new Card(4,1));
-        flu.add(new Card(3,1));
-
-        str.add(new Card(34, 1));
-        str.add(new Card(33, 1));
-        str.add(new Card(32,1));
-        str.add(new Card(31,2));
-        str.add(new Card(30,1));
-
-        trips.add(new Card(30,1));
-        trips.add(new Card(30,2));
-        trips.add(new Card(30,3));
-        trips.add(new Card(26,4));
-        trips.add(new Card(25,2));
-
-        dpair.add(new Card(14,1));
-        dpair.add(new Card(14,2));
-        dpair.add(new Card(13,1));
-        dpair.add(new Card(2,2));
-        dpair.add(new Card(2,3));
-
-        pair.add(new Card(29,1));
-        pair.add(new Card(29,2));
-        pair.add(new Card(26,1));
-        pair.add(new Card(25,2));
-        pair.add(new Card(22,3));
-
-        hcard.add(new Card(34, 1));
-        hcard.add(new Card(33, 1));
-        hcard.add(new Card(32,1));
-        hcard.add(new Card(31,2));
-        hcard.add(new Card(29,1));
-
+    public static List<Card> createCardList(String[] cards){
+        return Arrays.stream(cards).map(StringCardConverter::getCardFromString).toList();
     }
 
     @Test
     public void testHandStrength(){
-        assertEquals( (int) HandStrengthCalc.getHandStrength(strFlu), STRAIGHT_FLUSH);
-        assertEquals( (int) HandStrengthCalc.getHandStrength(quads), QUADS);
-        assertEquals( (int) HandStrengthCalc.getHandStrength(full), FULL);
-        assertEquals( (int) HandStrengthCalc.getHandStrength(flu), FLUSH);
-        assertEquals( (int) HandStrengthCalc.getHandStrength(str), STRAIGHT);
-        assertEquals( (int) HandStrengthCalc.getHandStrength(trips), TRIPS);
-        assertEquals( (int) HandStrengthCalc.getHandStrength(dpair), D_PAIR);
-        assertEquals( (int) HandStrengthCalc.getHandStrength(pair), PAIR);
-        assertEquals( (int) HandStrengthCalc.getHandStrength(hcard), 0);
+
+        assertEquals( (int) HandStrengthCalc.getHandStrength(createCardList(strFlu1)), STRAIGHT_FLUSH);
+        assertEquals( (int) HandStrengthCalc.getHandStrength(createCardList(quads1)), QUADS);
+        assertEquals( (int) HandStrengthCalc.getHandStrength(createCardList(full1)), FULL);
+        assertEquals( (int) HandStrengthCalc.getHandStrength(createCardList(flu1)), FLUSH);
+        assertEquals( (int) HandStrengthCalc.getHandStrength(createCardList(str1)), STRAIGHT);
+        assertEquals( (int) HandStrengthCalc.getHandStrength(createCardList(trips1)), TRIPS);
+        assertEquals( (int) HandStrengthCalc.getHandStrength(createCardList(dpair1)), D_PAIR);
+        assertEquals( (int) HandStrengthCalc.getHandStrength(createCardList(pair1)), PAIR);
+        assertEquals( (int) HandStrengthCalc.getHandStrength(createCardList(hcard1)), 0);
     }
     @Test
     public void testStrengthFromDPair(){
-        List<Card> dpair2 = new ArrayList<>();
-        dpair2.add(new Card(14,1));
-        dpair2.add(new Card(14,2));
-        dpair2.add(new Card(3,1));
-        dpair2.add(new Card(3,2));
-        dpair2.add(new Card(2,3));
+        String[] dpair2 = {"As", "Ah", "3s", "3d", "2d"};
 
-        double dpairStr = HandStrengthCalc.getHandStrength(dpair);
-        double dpair2Str = HandStrengthCalc.getHandStrength(dpair2);
+        double dpairStr = HandStrengthCalc.getHandStrength(createCardList(dpair1));
+        double dpair2Str = HandStrengthCalc.getHandStrength(createCardList(dpair2));
         assert  dpair2Str > dpairStr;
     }
 
     @Test
     public void testStrengthFromFlush(){
-        List<Card> flu2 = new ArrayList<>();
-        flu2.add(new Card(13,1));
-        flu2.add(new Card(12,1));
-        flu2.add(new Card(11,1));
-        flu2.add(new Card(10,1));
-        flu2.add(new Card(8,1));
-
-        assert HandStrengthCalc.getHandStrength(flu) > HandStrengthCalc.getHandStrength(flu2);
+        String[] flu2 = {"Ks", "Qs", "Js", "Ts", "8s"};
+        assert HandStrengthCalc.getHandStrength(createCardList(flu1)) > HandStrengthCalc.getHandStrength(createCardList(flu2));
     }
 }
