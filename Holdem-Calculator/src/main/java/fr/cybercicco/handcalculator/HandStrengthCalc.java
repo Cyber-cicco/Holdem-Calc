@@ -27,13 +27,15 @@ public class HandStrengthCalc {
      * compare the strength of two hands.
      * As simple as that.
      */
+
+    //TODO: change how straights and flushes work to adapt to potential seven cards Lists
     public static double getHandStrength(List<Card> cards) {
 
         //on déclare les variables permettant de vérifier la nature de la main
         byte pair = 0;
         boolean trips = false;
-        boolean flush = true;
-        boolean straight = true;
+        int[] flushArr = {0,0,0,0};
+        int straightAccumulator = 0;
         boolean quads = false;
         double strength;
 
@@ -42,14 +44,13 @@ public class HandStrengthCalc {
         cards.forEach((c) -> flags.put(c, RATIO_HIGH));
 
         //on lance la boucle itérant sur toutes les cartes
-        for (int i = 1; i < 5; i++) {
+        for (int i = 1; i < cards.size(); i++) {
+            flushArr[cards.get(i).suite-1]++;
             //Si la carte actuelle n'est pas égale à un de moins que la carte avant, alors ce n'est pas une suite
-            if (straight && (cards.get(i).strength != cards.get(i-1).strength - 1)) {
-                straight = false;
-            }
-            //Si la couleur de la carte actuelle n'est pas égale à celle de de la carte avant, alors ce n'est pas une flush
-            if (flush && (cards.get(i).suite != cards.get(i - 1).suite)) {
-                flush = false;
+            if (cards.get(i-1).strength - cards.get(i).strength <= 1) {
+                straightAccumulator += cards.get(i-1).strength - cards.get(i).strength;
+            } else {
+                if(straightAccumulator < 4) straightAccumulator = 0;
             }
             //Bloc de code ou toute situation est mutuellement exclusive
             //Si on a déjà identifié que trois cartes étaient identiques:
@@ -67,7 +68,7 @@ public class HandStrengthCalc {
                     trips = true;
                     pair--; //On décrément la paire, puisqu'il s'agit de trois cartes identiques et non deux
                     flags.put(cards.get(i), RATIO_TRIPS);
-                } else if (cards.get(i).strength == cards.get(i - 1).strength) {
+                } else if (cards.get(i).strength == cards.get(i - 1).strength && pair ==1) {
                     pair++;
                     flags.put(cards.get(i), RATIO_PAIR);
                 }
@@ -77,39 +78,17 @@ public class HandStrengthCalc {
                 flags.put(cards.get(i-1), RATIO_PAIR);
             }
         }
-        //code assez parlant (relativement au reste), donc juste on a pas set correctement la force des mains pour
-        //certaines combinaisons, donc on le fait maintenant.
 
-        if (quads){
-            strength = setRelativeStrength(cards, flags,QUADS);
-        } else if (pair == 2) {
-            strength = setRelativeStrength(cards, flags, D_PAIR);
-        } else if (pair == 1) {
-            if(trips){
-                strength = setRelativeStrength(cards, flags,FULL);
-            } else {
-                strength = setRelativeStrength(cards, flags,PAIR);
-            }
-        } else if (trips){
-            strength = setRelativeStrength(cards, flags,TRIPS);
-        } else if (straight) {
-            if (flush) {
-                strength = setRelativeStrength(cards, flags,STRAIGHT_FLUSH);
-            } else {
-                strength = setRelativeStrength(cards, flags,STRAIGHT);
-            }
-        } else if (cards.get(0).strength == 14 && cards.get(1).strength == 5) {
-            if(flush){
-                strength = STRAIGHT_FLUSH;
-            } else{
-                strength = STRAIGHT;
-            }
-        } else if (flush) {
-            strength = setRelativeStrength(cards, flags,FLUSH);
-        } else {
-            strength = setRelativeStrength(cards, flags, 0);
-        }
-        return strength;
+        boolean flush = Arrays.stream(flushArr).anyMatch(i -> i>=4);
+        if(straightAccumulator >= 4 && flush) return setRelativeStrength(cards, flags, STRAIGHT_FLUSH);
+        if(quads) return setRelativeStrength(cards, flags, QUADS);
+        if(trips && pair > 0) return setRelativeStrength(cards, flags, FULL);
+        if(flush) return setRelativeStrength(cards, flags, FLUSH);
+        if(straightAccumulator >= 4) return setRelativeStrength(cards, flags, STRAIGHT);
+        if(trips) return setRelativeStrength(cards, flags, TRIPS);
+        if(pair > 1) return setRelativeStrength(cards, flags, D_PAIR);
+        if(pair == 1) return setRelativeStrength(cards, flags, PAIR);
+        return setRelativeStrength(cards, flags, 0);
     }
 
     /**

@@ -96,12 +96,12 @@ public class HandStrTest {
         String[] wheel = {"As", "5s", "4h", "3h", "2h"};
         String[] fluWheel = {"As", "5s", "4s", "3s", "2s"};
         String[] str = {"6s", "5s", "4h", "3h", "2h"};
-        assertTrue(HandStrengthCalc.getHandStrength(createCardList(wheel)) == STRAIGHT);
-        assertTrue(HandStrengthCalc.getHandStrength(createCardList(fluWheel)) == STRAIGHT_FLUSH);
+        String[] notWheel1 = {"As", "5d", "3d", "3h", "3c"};
+        String[] notWheel2 = {"As", "5d", "3d", "3h", "2c"};
+        assertEquals(STRAIGHT, HandStrengthCalc.getHandStrength(createCardList(wheel)));
+        assertEquals(STRAIGHT_FLUSH, HandStrengthCalc.getHandStrength(createCardList(fluWheel)));
         assertTrue(HandStrengthCalc.getHandStrength(createCardList(str)) > HandStrengthCalc.getHandStrength(createCardList(wheel)));
-    }
-
-    void testCombination(){
-
+        assertNotEquals(HandStrengthCalc.getHandStrength(createCardList(notWheel1)), STRAIGHT);
+        assertNotEquals(HandStrengthCalc.getHandStrength(createCardList(notWheel2)), STRAIGHT);
     }
 }
