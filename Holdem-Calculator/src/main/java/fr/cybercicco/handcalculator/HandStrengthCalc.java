@@ -9,8 +9,8 @@ import java.util.*;
  */
 public class HandStrengthCalc {
 
-    static final double RATIO_TRIPS = 0.1;
-    static final double RATIO_PAIR = 0.0001;
+    static final double RATIO_TRIPS = 0.001;
+    static final double RATIO_PAIR = 0.0000001;
     static final double RATIO_HIGH = 0.00000001;
     static final int PAIR = 1;
     static final int D_PAIR = 2;
@@ -102,7 +102,7 @@ public class HandStrengthCalc {
         double i = 0.1;
         double str = 0;
         for(Card card : cards){
-            str += card.strength * flags.get(card) * i;
+            str += (flags.get(card) == RATIO_HIGH) ? card.strength * flags.get(card) * i : card.strength * flags.get(card);
             i *= 0.1;
         }
         return str + mainStr;
