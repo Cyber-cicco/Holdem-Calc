@@ -1,12 +1,10 @@
 package fr.cybercicco.deckentities;
 
-import fr.cybercicco.utils.StringCardConverter;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
-    private final List<Card> communityCards = new ArrayList<>();
+    public final List<Card> communityCards = new ArrayList<>();
 
     public void createRandomBoard(Deck deck){
         deck.clearCards();
