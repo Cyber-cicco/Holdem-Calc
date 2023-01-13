@@ -1,5 +1,7 @@
 package fr.cybercicco.deckentities;
 
+import fr.cybercicco.utils.StringCardConverter;
+
 public class Card implements Comparable<Card>{
     public int strength;
     public final int suite;
@@ -20,5 +22,9 @@ public class Card implements Comparable<Card>{
     @Override
     public int compareTo(Card o) {
         return -Integer.compare(strength, o.strength);
+    }
+    @Override
+    public String toString(){
+         return StringCardConverter.getStringFromCard(this);
     }
 }

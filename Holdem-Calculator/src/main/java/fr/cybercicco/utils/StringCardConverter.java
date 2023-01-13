@@ -60,7 +60,7 @@ public class StringCardConverter {
             case 12 -> "Q" + intToChar[card.suite - 1];
             case 13 -> "K" + intToChar[card.suite - 1];
             case 14 -> "A" + intToChar[card.suite - 1];
-            default -> "" + (card.strength - 20) + intToChar[card.suite - 1];
+            default -> "" + (card.strength) + intToChar[card.suite - 1];
         };
     }
 }
