@@ -90,4 +90,14 @@ public class HandStrTest {
         assert HandStrengthCalc.getHandStrength(createCardList(pair1)) > HandStrengthCalc.getHandStrength(createCardList(pair2));
         assert HandStrengthCalc.getHandStrength(createCardList(pair3)) > HandStrengthCalc.getHandStrength(createCardList(pair2));
     }
+
+    @Test
+    void testWheel(){
+        String[] wheel = {"As", "5s", "4h", "3h", "2h"};
+        String[] fluWheel = {"As", "5s", "4s", "3s", "2s"};
+        String[] str = {"6s", "5s", "4h", "3h", "2h"};
+        assertTrue(HandStrengthCalc.getHandStrength(createCardList(wheel)) == STRAIGHT);
+        assertTrue(HandStrengthCalc.getHandStrength(createCardList(fluWheel)) == STRAIGHT_FLUSH);
+        assertTrue(HandStrengthCalc.getHandStrength(createCardList(str)) > HandStrengthCalc.getHandStrength(createCardList(wheel)));
+    }
 }

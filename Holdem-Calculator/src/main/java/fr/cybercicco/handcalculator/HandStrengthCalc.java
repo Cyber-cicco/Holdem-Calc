@@ -79,6 +79,7 @@ public class HandStrengthCalc {
         }
         //code assez parlant (relativement au reste), donc juste on a pas set correctement la force des mains pour
         //certaines combinaisons, donc on le fait maintenant.
+
         if (quads){
             strength = setRelativeStrength(cards, flags,QUADS);
         } else if (pair == 2) {
@@ -97,9 +98,15 @@ public class HandStrengthCalc {
             } else {
                 strength = setRelativeStrength(cards, flags,STRAIGHT);
             }
+        } else if (cards.get(0).strength == 14 && cards.get(1).strength == 5) {
+            if(flush){
+                strength = STRAIGHT_FLUSH;
+            } else{
+                strength = STRAIGHT;
+            }
         } else if (flush) {
             strength = setRelativeStrength(cards, flags,FLUSH);
-        } else{
+        } else {
             strength = setRelativeStrength(cards, flags, 0);
         }
         return strength;
