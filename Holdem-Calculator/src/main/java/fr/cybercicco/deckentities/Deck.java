@@ -42,6 +42,16 @@ public class Deck {
         throw new CardException("The provided card doesn't exist : " + strength + " " + suite);
     }
 
+    public Card getCardFromDeckPermanently(int strength, int suite){
+        for(int i = 0; i < cards.size(); i++){
+            if( cards.get(i).strength == strength && cards.get(i).suite == suite){
+                allCards.remove(i);
+                return cards.remove(i);
+            }
+        }
+        throw new CardException("The provided card doesn't exist : " + strength + " " + suite);
+    }
+
     public Card getRandomCard(){
         return cards.remove(rand.nextInt(cards.size()));
     }

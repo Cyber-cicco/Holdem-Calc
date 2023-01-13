@@ -31,9 +31,13 @@ public class StringCardConverter {
     }
 
     public static Card getCardFromString(String card){
-        int strength;
-        strength = getStrength(card);
+        int strength = getStrength(card);
         return new Card(strength, cdsh.get(card.charAt(1)));
+    }
+
+    public static Card getCardFromStringPermanently(String card, Deck deck){
+        int strength = getStrength(card);
+        return deck.getCardFromDeckPermanently(strength, cdsh.get(card.charAt(1)));
     }
 
     private static int getStrength(String card) {

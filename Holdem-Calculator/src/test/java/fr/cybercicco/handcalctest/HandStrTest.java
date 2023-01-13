@@ -100,4 +100,8 @@ public class HandStrTest {
         assertTrue(HandStrengthCalc.getHandStrength(createCardList(fluWheel)) == STRAIGHT_FLUSH);
         assertTrue(HandStrengthCalc.getHandStrength(createCardList(str)) > HandStrengthCalc.getHandStrength(createCardList(wheel)));
     }
+
+    void testCombination(){
+
+    }
 }
