@@ -1,6 +1,7 @@
 package fr.cybercicco;
 
 import fr.cybercicco.deckentities.*;
+import fr.cybercicco.handcalculator.CombinationCalc;
 import fr.cybercicco.handcalculator.EquityCalc;
 import fr.cybercicco.handcalculator.HandStrengthCalc;
 import fr.cybercicco.handcalculator.Showdown;
@@ -13,6 +14,10 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
+        Deck deck = new Deck();
+        Player player = new Player();
+        CombinationCalc.setBestOfFiveCards(player, deck.getAllCards());
+        /*
         Board board = new Board();
         Deck deck = new Deck();
         MainPlayer player1 = new MainPlayer();
@@ -25,7 +30,7 @@ public class Main {
         Date date = new Date();
         long time1 = date.getTime();
         System.out.println(eqc.getEquity(player1,player2));
-        System.out.println(new Date().getTime()-time1);
+        System.out.println(new Date().getTime()-time1);*/
 
 
 

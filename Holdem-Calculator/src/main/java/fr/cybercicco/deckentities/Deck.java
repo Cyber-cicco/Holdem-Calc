@@ -11,6 +11,10 @@ public class Deck {
     private final List<Card> allCards = new ArrayList<>(52);
     private final Random rand = new Random();
 
+    public List<Card> getAllCards() {
+        return allCards;
+    }
+
     /**
      * Instantiating a deck creates all cards that will be used and put it in an arraylist
      * Every instance of a card should only be created here, as every card should be picked from the deck, so that there

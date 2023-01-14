@@ -1,6 +1,7 @@
 package fr.cybercicco.handcalctest;
 
 import fr.cybercicco.deckentities.Card;
+import fr.cybercicco.deckentities.Deck;
 import fr.cybercicco.deckentities.Player;
 import fr.cybercicco.handcalculator.CombinationCalc;
 import org.junit.jupiter.api.Test;
@@ -35,5 +36,13 @@ public class HandCombTest {
         assertTrue(player2.strength > player3.strength);
         assertTrue(player4.strength > player1.strength);
         assertTrue(player5.strength > player4.strength);
+    }
+
+    @Test
+    private void testAllCombinations(){
+        Deck deck = new Deck();
+        Player player = new Player();
+        CombinationCalc.setBestOfFiveCards(player, deck.getAllCards());
+        assertTrue(player.strength > 8);
     }
 }
